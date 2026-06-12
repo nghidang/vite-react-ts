@@ -1,0 +1,7 @@
+.route-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-muted, #888);
+}

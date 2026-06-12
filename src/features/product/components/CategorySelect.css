@@ -1,0 +1,9 @@
+.category-select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}

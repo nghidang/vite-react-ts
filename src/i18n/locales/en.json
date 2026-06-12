@@ -1,0 +1,23 @@
+{
+  "common": {
+    "error": {
+      "default": "Something went wrong. Please try again."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "username": "Username:",
+      "password": "Password:",
+      "submit": "Login",
+      "submitting": "Logging in...",
+      "validation": {
+        "required": "Please enter your username and password"
+      },
+      "error": {
+        "failed": "Login failed: please check your username and password.",
+        "invalidData": "Login failed: the server returned invalid data."
+      }
+    }
+  }
+}

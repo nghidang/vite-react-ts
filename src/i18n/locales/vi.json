@@ -1,0 +1,23 @@
+{
+  "common": {
+    "error": {
+      "default": "Đã có lỗi xảy ra. Vui lòng thử lại."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Đăng nhập",
+      "username": "Tên đăng nhập:",
+      "password": "Mật khẩu:",
+      "submit": "Đăng nhập",
+      "submitting": "Đang đăng nhập...",
+      "validation": {
+        "required": "Vui lòng nhập username và password"
+      },
+      "error": {
+        "failed": "Đăng nhập thất bại: Vui lòng kiểm tra lại username và password.",
+        "invalidData": "Đăng nhập thất bại: Server trả về dữ liệu không hợp lệ."
+      }
+    }
+  }
+}
