@@ -11,6 +11,7 @@
     "doctor": "npx react-doctor@latest --verbose --diff false"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
     "@reduxjs/toolkit": "^2.12.0",
     "@tanstack/react-query": "^5.101.0",
     "axios": "^1.16.1",
@@ -19,7 +20,8 @@
     "react-grab": "^0.1.44",
     "react-hook-form": "^7.79.0",
     "react-redux": "^9.3.0",
-    "react-router-dom": "^7.16.0"
+    "react-router-dom": "^7.16.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

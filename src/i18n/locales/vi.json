@@ -14,7 +14,10 @@
       "validation": {
         "required": "Vui lòng nhập username và password",
         "usernameRequired": "Vui lòng nhập tên đăng nhập",
-        "passwordRequired": "Vui lòng nhập mật khẩu"
+        "usernameMinLength": "Tên đăng nhập phải có ít nhất 3 ký tự",
+        "usernameInvalid": "Tên đăng nhập chỉ gồm chữ, số và dấu gạch dưới",
+        "passwordRequired": "Vui lòng nhập mật khẩu",
+        "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự"
       },
       "error": {
         "failed": "Đăng nhập thất bại: Vui lòng kiểm tra lại username và password.",

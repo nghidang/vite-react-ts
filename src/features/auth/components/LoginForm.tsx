@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../app/hooks'
@@ -6,7 +7,8 @@ import { ROUTES } from '../../../constants/route.constants'
 import { useApiRequest } from '../../../hooks/useApiRequest'
 import { useTranslation } from '../../../hooks/useTranslation'
 import type { FromLocationState } from '../../../types/router.types'
-import type { LoginCredentials, LoginResponse } from '../auth.types'
+import { createLoginSchema, type LoginFormValues } from '../auth.schemas'
+import type { LoginResponse } from '../auth.types'
 import * as authService from '../services/authService'
 import { loginSuccess } from '../stores/authSlice'
 import './LoginForm.css'
@@ -23,11 +25,12 @@ export function LoginForm() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginCredentials>({
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(createLoginSchema(t)),
     defaultValues: { username: '', password: '' },
   })
 
-  const onSubmit = async ({ username, password }: LoginCredentials) => {
+  const onSubmit = async ({ username, password }: LoginFormValues) => {
     const result = await run(
       () => authService.login(username, password),
       t('auth.login.error.failed')
@@ -56,7 +59,6 @@ export function LoginForm() {
         <ControlledInputText
           control={control}
           name="username"
-          rules={{ required: t('auth.login.validation.usernameRequired') }}
           id="username"
           autoComplete="username"
         />
@@ -68,7 +70,6 @@ export function LoginForm() {
         <ControlledInputText
           control={control}
           name="password"
-          rules={{ required: t('auth.login.validation.passwordRequired') }}
           type="password"
           id="password"
           autoComplete="current-password"
