@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { ROUTES } from '../../../constants/route.constants'
-import { useApiRequest } from '../../../hooks/useApiRequest'
+import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { CategorySelect } from '../components/CategorySelect'
-import type { Product } from '../product.types'
-import * as productService from '../services/productService'
+import { useProducts } from '../hooks/useProducts'
 import './List.css'
 
 export function ProductList() {
@@ -12,16 +10,11 @@ export function ProductList() {
   const search = searchParams.get('search')
   const category = searchParams.get('category')
 
-  const { loading, error, data: products, run } = useApiRequest<Product[]>()
-
-  useEffect(() => {
-    run((signal) =>
-      productService.getProducts(
-        { name: search ?? undefined, category: category ?? undefined },
-        signal
-      )
-    )
-  }, [run, search, category])
+  const {
+    isPending: loading,
+    error,
+    data: products,
+  } = useProducts({ name: search ?? undefined, category: category ?? undefined })
 
   return (
     <div className="product-list">
@@ -31,7 +24,7 @@ export function ProductList() {
       <CategorySelect />
 
       {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {error && <p>{getErrorMessage(error)}</p>}
 
       <ul>
         {products?.map((product) => (

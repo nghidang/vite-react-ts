@@ -1,28 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '../../../app/hooks'
-import { ControlledInputText } from '../../../components/common/InputText/ControlledInputText'
+import { Link } from 'react-router-dom'
 import { ROUTES } from '../../../constants/route.constants'
-import { useApiRequest } from '../../../hooks/useApiRequest'
 import { useTranslation } from '../../../hooks/useTranslation'
+import { resolveAuthError } from '../auth.errors'
 import { createRegisterSchema, type RegisterFormValues } from '../auth.schemas'
-import type { LoginResponse } from '../auth.types'
-import * as authService from '../services/authService'
-import { loginSuccess } from '../stores/authSlice'
-import './RegisterForm.css'
+import { useRegister } from '../hooks/authMutations'
+import { useAuthSuccess } from '../hooks/useAuthSuccess'
+import { AuthField } from './AuthField'
+import './AuthForm.css'
 
 export function RegisterForm() {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const { t } = useTranslation()
-
-  const { error, run, setError } = useApiRequest<LoginResponse>()
+  const register = useRegister()
+  const onAuthSuccess = useAuthSuccess()
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(createRegisterSchema(t)),
     defaultValues: { username: '', password: '', confirmPassword: '' },
@@ -30,71 +26,49 @@ export function RegisterForm() {
   })
 
   // confirmPassword chỉ phục vụ validate phía client -> không gửi lên server.
-  const onSubmit = async ({ username, password }: RegisterFormValues) => {
-    const result = await run(
-      () => authService.register(username, password),
-      t('auth.register.error.failed')
-    )
+  const onSubmit = ({ username, password }: RegisterFormValues) =>
+    register.mutate({ username, password }, { onSuccess: onAuthSuccess })
 
-    if (!result) return // request lỗi — error đã được set trong hook
-
-    if (!result.user || !result.token) {
-      setError(t('auth.register.error.invalidData'))
-      return
-    }
-
-    // Đăng ký xong tự đăng nhập luôn.
-    const { user, token, refreshToken, expireAt } = result
-    dispatch(loginSuccess({ user, token, refreshToken, expireAt }))
-    navigate(ROUTES.USER, { replace: true })
-  }
+  const errorMessage = resolveAuthError(register.error, {
+    invalidData: t('auth.register.error.invalidData'),
+    failed: t('auth.register.error.failed'),
+  })
 
   return (
-    <form className="register-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
       <h2>{t('auth.register.title')}</h2>
 
-      <div className="register-field">
-        <label htmlFor="username">{t('auth.register.username')}</label>
-        <ControlledInputText
-          control={control}
-          name="username"
-          id="username"
-          autoComplete="username"
-        />
-      </div>
-      {errors.username && <p className="register-error">{errors.username.message}</p>}
+      <AuthField
+        control={control}
+        name="username"
+        label={t('auth.register.username')}
+        autoComplete="username"
+        error={errors.username?.message}
+      />
+      <AuthField
+        control={control}
+        name="password"
+        type="password"
+        label={t('auth.register.password')}
+        autoComplete="new-password"
+        error={errors.password?.message}
+      />
+      <AuthField
+        control={control}
+        name="confirmPassword"
+        type="password"
+        label={t('auth.register.confirmPassword')}
+        autoComplete="new-password"
+        error={errors.confirmPassword?.message}
+      />
 
-      <div className="register-field">
-        <label htmlFor="password">{t('auth.register.password')}</label>
-        <ControlledInputText
-          control={control}
-          name="password"
-          type="password"
-          id="password"
-          autoComplete="new-password"
-        />
-      </div>
-      {errors.password && <p className="register-error">{errors.password.message}</p>}
+      {errorMessage && <p className="auth-error">{errorMessage}</p>}
 
-      <div className="register-field">
-        <label htmlFor="confirmPassword">{t('auth.register.confirmPassword')}</label>
-        <ControlledInputText
-          control={control}
-          name="confirmPassword"
-          type="password"
-          id="confirmPassword"
-          autoComplete="new-password"
-        />
-      </div>
-      {errors.confirmPassword && <p className="register-error">{errors.confirmPassword.message}</p>}
-
-      {error && <p className="register-error">{error}</p>}
-
-      <button type="submit" className="register-submit" disabled={isSubmitting}>
-        {isSubmitting ? t('auth.register.submitting') : t('auth.register.submit')}
+      <button type="submit" className="auth-submit" disabled={register.isPending}>
+        {register.isPending ? t('auth.register.submitting') : t('auth.register.submit')}
       </button>
 
-      <p className="register-switch">
+      <p className="auth-switch">
         {t('auth.register.haveAccount')} <Link to={ROUTES.LOGIN}>{t('auth.register.toLogin')}</Link>
       </p>
     </form>

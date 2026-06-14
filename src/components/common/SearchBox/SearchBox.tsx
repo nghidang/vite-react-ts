@@ -23,7 +23,7 @@ export function SearchBox() {
   }
 
   // Ghi từ khoá lên URL từ khoá khi người dùng ngừng gõ. URL là nguồn sự thật duy nhất:
-  // ProductList lắng nghe URL để fetch (AbortController trong useApiRequest huỷ request cũ).
+  // ProductList lắng nghe URL để fetch (react-query đổi queryKey -> tự huỷ request cũ qua signal).
   const debounced = useDebouncedValue(value.trim(), 400)
 
   /** Đồng bộ từ khoá (đã debounce hoặc submit) lên URL. Tách ra để debounce và Enter dùng chung. */
