@@ -12,7 +12,9 @@
       "submit": "Login",
       "submitting": "Logging in...",
       "validation": {
-        "required": "Please enter your username and password"
+        "required": "Please enter your username and password",
+        "usernameRequired": "Please enter your username",
+        "passwordRequired": "Please enter your password"
       },
       "error": {
         "failed": "Login failed: please check your username and password.",

@@ -12,7 +12,9 @@
       "submit": "Đăng nhập",
       "submitting": "Đang đăng nhập...",
       "validation": {
-        "required": "Vui lòng nhập username và password"
+        "required": "Vui lòng nhập username và password",
+        "usernameRequired": "Vui lòng nhập tên đăng nhập",
+        "passwordRequired": "Vui lòng nhập mật khẩu"
       },
       "error": {
         "failed": "Đăng nhập thất bại: Vui lòng kiểm tra lại username và password.",
