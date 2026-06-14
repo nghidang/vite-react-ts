@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import * as productService from '../services/productService'
 
 type ProductFilters = { name?: string; category?: string }
@@ -17,5 +17,8 @@ export function useProducts(filters: ProductFilters) {
   return useQuery({
     queryKey: productKeys.list(filters),
     queryFn: ({ signal }) => productService.getProducts(filters, signal),
+    // Đổi filter: giữ list cũ hiển thị trong lúc fetch bộ mới -> không nháy "Loading..." mỗi lần search.
+    // Dùng kèm `isPlaceholderData` ở component để làm mờ list khi đang tải.
+    placeholderData: keepPreviousData,
   })
 }

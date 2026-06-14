@@ -3,3 +3,10 @@
   margin-bottom: 0.5rem;
   text-align: left;
 }
+
+/* Đang tải bộ filter mới: làm mờ + chặn click list cũ cho tới khi có dữ liệu mới. */
+.product-list ul.is-loading {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}

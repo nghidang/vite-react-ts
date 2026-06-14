@@ -12,6 +12,7 @@ export function ProductList() {
 
   const {
     isPending: loading,
+    isPlaceholderData,
     error,
     data: products,
   } = useProducts({ name: search ?? undefined, category: category ?? undefined })
@@ -26,7 +27,8 @@ export function ProductList() {
       {loading && <p>Loading...</p>}
       {error && <p>{getErrorMessage(error)}</p>}
 
-      <ul>
+      {/* isPlaceholderData: đang fetch filter mới nhưng vẫn hiện list cũ -> làm mờ để báo đang tải. */}
+      <ul className={isPlaceholderData ? 'is-loading' : undefined}>
         {products?.map((product) => (
           <li key={product.id}>
             <Link to={ROUTES.PRODUCT_DETAIL.replace(':id', String(product.id))}>
