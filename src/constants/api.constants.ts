@@ -2,6 +2,7 @@ const BASE_URL = 'http://localhost:3000/api'
 
 const API_ENDPOINTS = {
   LOGIN: 'login',
+  REGISTER: 'register',
   REFRESH: 'refresh-token',
   PRODUCTS: 'products',
 }

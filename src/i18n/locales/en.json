@@ -5,24 +5,43 @@
     }
   },
   "auth": {
+    "validation": {
+      "usernameRequired": "Please enter your username",
+      "usernameMinLength": "Username must be at least 3 characters",
+      "usernameInvalid": "Username may only contain letters, numbers and underscores",
+      "passwordRequired": "Please enter your password",
+      "passwordMinLength": "Password must be at least 6 characters"
+    },
     "login": {
       "title": "Login",
       "username": "Username:",
       "password": "Password:",
       "submit": "Login",
       "submitting": "Logging in...",
-      "validation": {
-        "required": "Please enter your username and password",
-        "usernameRequired": "Please enter your username",
-        "usernameMinLength": "Username must be at least 3 characters",
-        "usernameInvalid": "Username may only contain letters, numbers and underscores",
-        "passwordRequired": "Please enter your password",
-        "passwordMinLength": "Password must be at least 6 characters"
-      },
       "error": {
         "failed": "Login failed: please check your username and password.",
         "invalidData": "Login failed: the server returned invalid data."
-      }
+      },
+      "noAccount": "Don't have an account?",
+      "toRegister": "Sign up"
+    },
+    "register": {
+      "title": "Sign up",
+      "username": "Username:",
+      "password": "Password:",
+      "confirmPassword": "Confirm password:",
+      "submit": "Sign up",
+      "submitting": "Signing up...",
+      "validation": {
+        "confirmRequired": "Please confirm your password",
+        "passwordMismatch": "Passwords do not match"
+      },
+      "error": {
+        "failed": "Sign up failed: please try again.",
+        "invalidData": "Sign up failed: the server returned invalid data."
+      },
+      "haveAccount": "Already have an account?",
+      "toLogin": "Log in"
     }
   }
 }

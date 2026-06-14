@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../app/hooks'
 import { ControlledInputText } from '../../../components/common/InputText/ControlledInputText'
 import { ROUTES } from '../../../constants/route.constants'
@@ -82,6 +82,10 @@ export function LoginForm() {
       <button type="submit" className="login-submit" disabled={isSubmitting}>
         {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit')}
       </button>
+
+      <p className="login-switch">
+        {t('auth.login.noAccount')} <Link to={ROUTES.REGISTER}>{t('auth.login.toRegister')}</Link>
+      </p>
     </form>
   )
 }

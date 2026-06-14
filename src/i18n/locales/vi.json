@@ -5,24 +5,43 @@
     }
   },
   "auth": {
+    "validation": {
+      "usernameRequired": "Vui lòng nhập tên đăng nhập",
+      "usernameMinLength": "Tên đăng nhập phải có ít nhất 3 ký tự",
+      "usernameInvalid": "Tên đăng nhập chỉ gồm chữ, số và dấu gạch dưới",
+      "passwordRequired": "Vui lòng nhập mật khẩu",
+      "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự"
+    },
     "login": {
       "title": "Đăng nhập",
       "username": "Tên đăng nhập:",
       "password": "Mật khẩu:",
       "submit": "Đăng nhập",
       "submitting": "Đang đăng nhập...",
-      "validation": {
-        "required": "Vui lòng nhập username và password",
-        "usernameRequired": "Vui lòng nhập tên đăng nhập",
-        "usernameMinLength": "Tên đăng nhập phải có ít nhất 3 ký tự",
-        "usernameInvalid": "Tên đăng nhập chỉ gồm chữ, số và dấu gạch dưới",
-        "passwordRequired": "Vui lòng nhập mật khẩu",
-        "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự"
-      },
       "error": {
         "failed": "Đăng nhập thất bại: Vui lòng kiểm tra lại username và password.",
         "invalidData": "Đăng nhập thất bại: Server trả về dữ liệu không hợp lệ."
-      }
+      },
+      "noAccount": "Chưa có tài khoản?",
+      "toRegister": "Đăng ký"
+    },
+    "register": {
+      "title": "Đăng ký",
+      "username": "Tên đăng nhập:",
+      "password": "Mật khẩu:",
+      "confirmPassword": "Nhập lại mật khẩu:",
+      "submit": "Đăng ký",
+      "submitting": "Đang đăng ký...",
+      "validation": {
+        "confirmRequired": "Vui lòng nhập lại mật khẩu",
+        "passwordMismatch": "Mật khẩu nhập lại không khớp"
+      },
+      "error": {
+        "failed": "Đăng ký thất bại: Vui lòng thử lại.",
+        "invalidData": "Đăng ký thất bại: Server trả về dữ liệu không hợp lệ."
+      },
+      "haveAccount": "Đã có tài khoản?",
+      "toLogin": "Đăng nhập"
     }
   }
 }

@@ -10,6 +10,7 @@ import { GuestRoute } from './GuestRoute'
 import { ProtectedRoute } from './ProtectedRoute'
 
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'))
+const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'))
 const UserPage = lazy(() => import('../features/auth/pages/UserPage'))
 const ProductDetail = lazy(() => import('../features/product/pages/Detail'))
 
@@ -31,6 +32,7 @@ export function AppRouter() {
       <Route element={<MainLayoutAuth />}>
         <Route element={<GuestRoute />}>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         </Route>
       </Route>
 

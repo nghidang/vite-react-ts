@@ -8,6 +8,11 @@ export type LoginCredentials = {
   password: string
 }
 
+export type RegisterCredentials = {
+  username: string
+  password: string
+}
+
 export type LoginResponse = {
   user: User
   token: string
