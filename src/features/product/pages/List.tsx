@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { Modal } from '../../../components/common/Modal/Modal'
 import { ROUTES } from '../../../constants/route.constants'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
+import { AddProductForm } from '../components/AddProductForm'
 import { CategorySelect } from '../components/CategorySelect'
 import { useProducts } from '../hooks/useProducts'
 import './List.css'
@@ -9,6 +12,8 @@ export function ProductList() {
   const [searchParams] = useSearchParams()
   const search = searchParams.get('search')
   const category = searchParams.get('category')
+
+  const [isAddOpen, setIsAddOpen] = useState(false)
 
   const {
     isPending: loading,
@@ -23,6 +28,15 @@ export function ProductList() {
       <p>This is the product list page - {search}</p>
 
       <CategorySelect />
+
+      <button type="button" className="product-list__add" onClick={() => setIsAddOpen(true)}>
+        Add product
+      </button>
+
+      <Modal open={isAddOpen} onClose={() => setIsAddOpen(false)} title="Add product">
+        {/* Render khi mở -> mỗi lần mở là form mới, khỏi reset thủ công. */}
+        {isAddOpen && <AddProductForm onClose={() => setIsAddOpen(false)} />}
+      </Modal>
 
       {loading && <p>Loading...</p>}
       {error && <p>{getErrorMessage(error)}</p>}

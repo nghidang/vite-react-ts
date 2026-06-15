@@ -1,0 +1,37 @@
+.add-product-form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.add-product-field {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-product-field input,
+.add-product-field select {
+  width: 100%;
+  /* border-box: width:100% gồm cả border+padding -> input và select bằng nhau (project ko có reset * global). */
+  box-sizing: border-box;
+}
+
+.add-product-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-product-error {
+  color: red;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.add-product-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

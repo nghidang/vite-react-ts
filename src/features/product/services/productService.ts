@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '../../../constants/api.constants'
 import { axiosClient } from '../../../services/axiosClient'
-import type { Product } from '../product.types'
+import type { NewProduct, Product } from '../product.types'
 
 export async function getProducts(
   filters?: { name?: string; category?: string },
@@ -14,6 +14,13 @@ export async function getProducts(
     params: Object.keys(params).length ? params : undefined,
     signal,
   })
+
+  return data
+}
+
+/** Tạo product mới. Server trả về product đã tạo kèm `id`. */
+export async function addProduct(input: NewProduct): Promise<Product> {
+  const { data } = await axiosClient.post<Product>(API_ENDPOINTS.PRODUCTS, input)
 
   return data
 }
