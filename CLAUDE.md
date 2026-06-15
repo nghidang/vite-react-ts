@@ -18,7 +18,8 @@ There is no test runner configured in this project.
 ## Stack
 
 - **React 19** + **TypeScript 6** frontend-only SPA, **Vite 8** (`@vitejs/plugin-react`, Oxc transformer)
-- **Redux Toolkit** + react-redux — auth / client state
+- **Redux Toolkit** + react-redux — auth state
+- **Zustand** v5 — local feature state (notifications)
 - **@tanstack/react-query** v5 — server state (data fetching/caching)
 - **react-router-dom** v7 — routing
 - **react-hook-form** + **zod** (`@hookform/resolvers`) — forms & validation
@@ -27,9 +28,10 @@ There is no test runner configured in this project.
 
 ## Architecture
 
-State is split by purpose — do not mix the two:
-- **Server state → react-query.** Anything fetched from the API lives in query hooks (`src/features/*/hooks/use*.ts`). The shared `QueryClient` (`src/app/queryClient.ts`) sets `staleTime: 30s`, `retry: 1`, no refetch-on-focus, and logs all errors centrally via `QueryCache`/`MutationCache` `onError` — individual hooks should not `console.error`. Use query-key factories (e.g. `productKeys` in `useProducts.ts`) so filters live in the key and invalidation/prefetch stay consistent.
-- **Client/auth state → Redux Toolkit.** `src/app/store.ts` (single `auth` slice today). Always use the typed `useAppDispatch`/`useAppSelector` from `src/app/hooks.ts`, never the bare react-redux hooks.
+State is split by purpose — pick the right home, do not mix them:
+- **Server state → react-query.** Anything fetched from the API lives in query hooks (`src/features/*/hooks/use*.ts`). The shared `QueryClient` (`src/app/queryClient.ts`) sets `staleTime: 30s`, `retry: 1`, no refetch-on-focus, and logs all errors centrally via `QueryCache`/`MutationCache` `onError` — individual hooks should not `console.error`. Use query-key factories (e.g. `productKeys` in `useProducts.ts`) so filters live in the key and invalidation/prefetch stay consistent. Mutations invalidate by key rather than hand-patching the cache (see `useAddProduct.ts`). When no detail endpoint exists, derive a single item from the shared list cache instead of a new query (see `useProduct.ts`).
+- **Auth state → Redux Toolkit.** `src/app/store.ts` (single `auth` slice today). Always use the typed `useAppDispatch`/`useAppSelector` from `src/app/hooks.ts`, never the bare react-redux hooks.
+- **Local feature state → Zustand.** Self-contained UI state that isn't server data and isn't auth (today: notifications, `src/features/notification/stores/notificationStore.ts`). Stores use the `persist` middleware for localStorage and export standalone selectors (e.g. `selectUnreadCount`) so components subscribe to a slice and only re-render when it changes.
 
 Providers are nested in `src/app/AppProviders.tsx`: `Redux Provider > QueryClientProvider > BrowserRouter`. A separate `LangProvider` supplies i18n.
 
