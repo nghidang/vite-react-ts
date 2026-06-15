@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { ROUTES } from '../../../constants/route.constants'
+import { NotificationPanel } from '../../notification/components/NotificationPanel/NotificationPanel'
 import { logout } from '../stores/authSlice'
 
 export default function UserPage() {
@@ -20,6 +21,8 @@ export default function UserPage() {
       <button type="button" onClick={handleLogout}>
         Logout
       </button>
+
+      <NotificationPanel />
     </div>
   )
 }
