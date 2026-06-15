@@ -1,0 +1,20 @@
+.product-detail {
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.product-detail__info {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.5rem 1rem;
+  margin: 1rem 0;
+}
+
+.product-detail__info dt {
+  font-weight: 600;
+}
+
+.product-detail__info dd {
+  margin: 0;
+}
