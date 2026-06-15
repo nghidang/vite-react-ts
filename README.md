@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Vite + React + TypeScript — Bài tập khoá học Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA frontend mô phỏng một ứng dụng thương mại điện tử nhỏ (đăng nhập/đăng ký, danh sách & chi tiết sản phẩm, giỏ hàng, đa ngôn ngữ). Dự án tập trung thể hiện các **kỹ thuật React/TypeScript** thường gặp trong sản phẩm thật.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Nhóm | Thư viện |
+| --- | --- |
+| Core | React 19, TypeScript 6, Vite 8 (`@vitejs/plugin-react` + Oxc) |
+| Server state | `@tanstack/react-query` 5 |
+| Client state | Redux Toolkit 2 + `react-redux` |
+| Routing | `react-router-dom` 7 |
+| Form & validation | `react-hook-form` 7 + `zod` 4 (`@hookform/resolvers`) |
+| HTTP | `axios` (interceptor + refresh token) |
+| Lint/format | ESLint 10 (flat config) + Prettier (no semi, single quote, width 100) |
 
-## React Compiler
+Package manager: **Yarn**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+yarn dev        # Vite dev server + HMR
+yarn build      # tsc -b && vite build
+yarn lint       # ESLint
+yarn preview    # Preview bản build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Kỹ thuật đã áp dụng
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Mỗi mục kèm file dẫn chứng để dễ rà lại trong code.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Debounce (search-as-you-type)
+- Custom hook generic `useDebouncedValue<T>` trả về giá trị sau khi "lặng" 400ms, huỷ timer cũ mỗi lần gõ → tránh fetch theo từng phím.
+- `src/hooks/useDebouncedValue.ts`, dùng tại `src/components/common/SearchBox/SearchBox.tsx`.
+
+### 2. AbortController / huỷ request
+- `queryFn` nhận `signal` từ react-query và truyền xuống axios; khi đổi filter, request cũ tự bị abort.
+- `src/features/product/services/productService.ts`, `src/features/product/hooks/useProducts.ts`.
+
+### 3. React Query (server state)
+- `QueryClient` cấu hình tập trung: `staleTime`, `retry: 1`, `refetchOnWindowFocus: false`, xử lý lỗi qua `queryCache`/`mutationCache` — `src/app/queryClient.ts`.
+- `useQuery` + **query key factory** (`productKeys`) và `placeholderData: keepPreviousData` để giữ list cũ khi đổi filter (UX mượt) — `src/features/product/hooks/useProducts.ts`.
+- `useMutation` cho login/register, validate payload ngay trong `mutationFn` — `src/features/auth/hooks/authMutations.ts`.
+
+### 4. Redux Toolkit (client/auth state)
+- `configureStore` + `createSlice` (`loginSuccess`, `tokenRefreshed`, `logout`) và selectors — `src/app/store.ts`, `src/features/auth/stores/authSlice.ts`.
+- Typed hooks `useAppDispatch` / `useAppSelector` — `src/app/hooks.ts`.
+- State auth được persist qua localStorage — `src/features/auth/stores/authStorage.ts`.
+
+### 5. React Router + code splitting
+- `BrowserRouter` + định nghĩa routes — `src/app/AppProviders.tsx`, `src/router/AppRouter.tsx`.
+- **Lazy loading** các page bằng `React.lazy` + `<Suspense>` với fallback dùng chung — `src/router/AppRouter.tsx`, `src/components/common/RouteFallback/`.
+- **ProtectedRoute** (chặn khi chưa đăng nhập) & **GuestRoute** (đẩy user đã đăng nhập khỏi /login), lưu `from` để quay lại sau khi login — `src/router/ProtectedRoute.tsx`, `src/router/GuestRoute.tsx`, `src/features/auth/hooks/useAuthSuccess.ts`.
+- Nhiều layout lồng nhau (`MainLayout` / `MainLayoutAuth`) — `src/layouts/`.
+
+### 6. React Hook Form + Zod
+- Zod schema, bao gồm `.refine` **cross-field** (xác nhận mật khẩu khớp) và schema động dùng hàm dịch `t` — `src/features/auth/auth.schemas.ts`.
+- `zodResolver` nối Zod với RHF; suy ra type form bằng `z.infer` — `src/features/auth/components/LoginForm.tsx`.
+- `Controller` + component `ControlledInputText<T>` generic — `src/features/auth/components/AuthField.tsx`, `src/components/common/InputText/ControlledInputText.tsx`.
+
+### 7. Axios: interceptor + refresh token
+- Request interceptor gắn `Authorization`; response interceptor bắt 401 → refresh 1 lần rồi replay request gốc (`_retry`) — `src/services/axiosClient.ts`.
+- **Single-flight refresh**: nhiều request 401 đồng thời chia sẻ chung một `refreshPromise`, thất bại thì logout — `src/services/tokenRefresh.ts`.
+- Refresh dùng axios "trần" (không interceptor) để tránh đệ quy — `src/features/auth/services/tokenService.ts`.
+
+### 8. i18n (đa ngôn ngữ EN/VI)
+- Hệ thống dịch tự viết: resolve key theo dot-path, fallback EN khi thiếu — `src/i18n/`.
+- `LangContext` + `LangProvider` (đồng bộ localStorage, `useMemo` cho context value) + hook `useTranslation` — `src/contexts/`, `src/app/LangProvider.tsx`, `src/hooks/useTranslation.ts`.
+
+### 9. Custom hooks & localStorage abstraction
+- `useLocalStorage<T>` generic (đọc/ghi an toàn, trả tuple `[value, setValue]`) — `src/hooks/useLocalStorage.ts`.
+- `useCart` (reducer wrapper, tính `totalPrice`), `useProducts`, `useAuthSuccess` — `src/features/*/hooks/`.
+
+### 10. Patterns TypeScript & xử lý lỗi
+- **Generics** ở hook/component (`useLocalStorage<T>`, `AuthField<T extends FieldValues>`).
+- **Discriminated union** cho `CartAction` + reducer dạng switch immutable — `src/features/cart/cart.types.ts`, `src/features/cart/stores/cartReducer.ts`.
+- **Type guards** (`axios.isAxiosError`, `instanceof InvalidAuthDataError`) và custom error class — `src/utils/getErrorMessage.ts`, `src/features/auth/auth.errors.ts`.
+- Suy luận type từ runtime: `z.infer`, `ReturnType<typeof store.getState>` (RootState).
+
+## Cấu trúc thư mục (feature-based)
+
+```
+src/
+├── app/          # store, queryClient, providers, typed hooks
+├── components/    # UI dùng chung (InputText, SearchBox, LangSwitcher, layout)
+├── features/      # tách theo domain
+│   ├── auth/      # schemas, errors, slice, services, hooks, components, pages
+│   ├── product/   # services, hooks (react-query), pages
+│   └── cart/      # reducer, hooks, pages
+├── hooks/         # custom hooks dùng chung (debounce, localStorage, translation)
+├── i18n/          # hệ thống dịch + locales (en/vi)
+├── router/        # AppRouter + Protected/Guest route
+├── services/      # axiosClient + tokenRefresh
+└── utils/         # getErrorMessage, formatDate
 ```
