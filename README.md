@@ -53,8 +53,10 @@ Mỗi mục kèm file dẫn chứng để dễ rà lại trong code.
 - **Selector riêng** `selectUnreadCount` để component (badge ở Header) chỉ re-render khi số chưa đọc đổi, không phải mọi thay đổi của `items`.
 
 ### 6. React Router + code splitting
-- `BrowserRouter` + định nghĩa routes — `src/app/AppProviders.tsx`, `src/router/AppRouter.tsx`.
-- **Lazy loading** các page bằng `React.lazy` + `<Suspense>` với fallback dùng chung — `src/router/AppRouter.tsx`, `src/components/common/RouteFallback/`.
+- **Tất cả provider gom về một chỗ** `AppProviders` theo thứ tự `LangProvider > ReduxProvider > QueryClientProvider > BrowserRouter` (Redux Provider alias `ReduxProvider`); `App.tsx` chỉ render `<AppProviders><AppRouter /></AppProviders>` nên `AppRouter` nằm trong mọi provider — `src/app/AppProviders.tsx`, `src/App.tsx`.
+- `AppRouter` dùng `useRoutes` trên một cây `RouteObject` để **ghép layout/guard**, không tự liệt kê route — `src/router/AppRouter.tsx`.
+- **Route do feature tự sở hữu**: mỗi feature khai báo route trong `*.routes.tsx` và export mảng `RouteObject` qua public API (`features/<name>`); AppRouter chỉ ghép vào đúng nhánh guard. Thêm/bớt route → sửa trong feature, không đụng router trung tâm — `src/features/*/*.routes.tsx`. auth tách 2 mảng (`authGuestRoutes` / `authProtectedRoutes`) vì nằm ở 2 nhánh guard khác nhau.
+- **Lazy loading** các page bằng `React.lazy` (khai trong file route của feature) + `<Suspense>` với fallback dùng chung đặt ở layout — `src/features/*/*.routes.tsx`, `src/layouts/`, `src/components/common/RouteFallback/`.
 - **ProtectedRoute** (chặn khi chưa đăng nhập) & **GuestRoute** (đẩy user đã đăng nhập khỏi /login), lưu `from` để quay lại sau khi login — `src/router/ProtectedRoute.tsx`, `src/router/GuestRoute.tsx`, `src/features/auth/hooks/useAuthSuccess.ts`.
 - Nhiều layout lồng nhau (`MainLayout` / `MainLayoutAuth`), kèm `Header` / `Footer` — `src/layouts/`.
 
@@ -98,9 +100,9 @@ src/
 ├── app/           # store, query.client, providers, typed hooks
 ├── components/    # UI dùng chung (InputText, SearchBox, LangSwitcher, Modal, RouteFallback)
 ├── features/      # tách theo domain — mỗi feature lộ public API qua index.ts
-│   ├── auth/          # *.slice/*.storage, *.service, hooks, components/, pages, *.schemas/*.errors/*.types
-│   ├── product/       # *.service, hooks (react-query), *.schemas/*.constants, components/, pages
-│   ├── cart/          # reducer/cart.reducer, hooks, pages, cart.types
+│   ├── auth/          # *.slice/*.storage, *.service, *.routes, hooks, components/, pages, *.schemas/*.errors/*.types
+│   ├── product/       # *.service, *.routes, hooks (react-query), *.schemas/*.constants, components/, pages
+│   ├── cart/          # reducer/cart.reducer, *.routes, hooks, pages, cart.types
 │   └── notification/  # *.store (Zustand), components
 ├── helpers/       # getErrorMessage
 ├── hooks/         # custom hooks dùng chung (useDebouncedValue, useLocalStorage)
@@ -111,4 +113,4 @@ src/
 └── types/         # type dùng chung (api, product, router)
 ```
 
-> **Quy ước đặt tên:** component/page là `PascalCase.tsx` (mỗi cái trong thư mục cùng tên); hook là `useX.ts`; các module-vai-trò còn lại dùng dot-case `<subject>.<role>.ts` (`*.service`, `*.slice`, `*.store`, `*.reducer`, `*.client`, `*.types`, `*.schemas`, `*.errors`, `*.constants`).
+> **Quy ước đặt tên:** component/page là `PascalCase.tsx` (mỗi cái trong thư mục cùng tên); hook là `useX.ts`; các module-vai-trò còn lại dùng dot-case `<subject>.<role>.ts` (`*.service`, `*.slice`, `*.store`, `*.reducer`, `*.client`, `*.types`, `*.schemas`, `*.errors`, `*.constants`, `*.routes`).
