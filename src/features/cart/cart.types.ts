@@ -1,8 +1,4 @@
-export type Product = {
-  id: string
-  name: string
-  price: number
-}
+import type { Product } from '../../types/product.types'
 
 export type CartItem = {
   product: Product
@@ -18,9 +14,9 @@ export const CartActionType = {
 
 export type CartAction =
   | { type: typeof CartActionType.ADD_ITEM; payload: Product }
-  | { type: typeof CartActionType.REMOVE_ITEM; payload: string } // payload is product id
+  | { type: typeof CartActionType.REMOVE_ITEM; payload: number } // payload is product id
   | {
       type: typeof CartActionType.UPDATE_QUANTITY
-      payload: { productId: string; delta: number }
+      payload: { productId: number; delta: number }
     }
   | { type: typeof CartActionType.CLEAR_CART }

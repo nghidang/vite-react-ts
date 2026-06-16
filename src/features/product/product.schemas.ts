@@ -15,3 +15,17 @@ export const productSchema = z.object({
 
 // Kiểu form suy ra thẳng từ schema -> trùng khít NewProduct, truyền thẳng vào mutate.
 export type ProductFormValues = z.infer<typeof productSchema>
+
+/**
+ * Schema validate dữ liệu product server trả về. `coerce` nắn `id`/`price` về number
+ * tại runtime kể cả khi server trả dạng string -> type `Product` luôn đúng sự thật.
+ */
+export const productResponseSchema = z.object({
+  id: z.coerce.number(),
+  name: z.string(),
+  price: z.coerce.number(),
+  category: z.string(),
+  status: z.boolean(),
+})
+
+export const productsResponseSchema = z.array(productResponseSchema)
