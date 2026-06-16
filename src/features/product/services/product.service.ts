@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '../../../constants/api.constants'
-import { axiosClient } from '../../../services/axiosClient'
+import { axiosClient } from '../../../services/axios.client'
 import type { NewProduct, Product } from '../../../types/product.types'
 import { productResponseSchema, productsResponseSchema } from '../product.schemas'
 

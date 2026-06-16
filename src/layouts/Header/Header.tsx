@@ -1,11 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { PAGES, ROUTES } from '../../constants/route.constants'
-import { selectIsAuthenticated } from '../../features/auth/stores/authSlice'
+import { selectIsAuthenticated } from '../../features/auth/stores/auth.slice'
 import {
   selectUnreadCount,
   useNotificationStore,
-} from '../../features/notification/stores/notificationStore'
+} from '../../features/notification/stores/notification.store'
 import { SearchBox } from '../../components/common/SearchBox/SearchBox'
 import './Header.css'
 

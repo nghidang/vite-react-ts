@@ -1,6 +1,6 @@
 import { store } from '../app/store'
-import { refreshAccessToken } from '../features/auth/services/tokenService'
-import { getStoredRefreshToken, logout, tokenRefreshed } from '../features/auth/stores/authSlice'
+import { refreshAccessToken } from '../features/auth/services/token.service'
+import { getStoredRefreshToken, logout, tokenRefreshed } from '../features/auth/stores/auth.slice'
 
 let refreshPromise: Promise<string> | null = null
 

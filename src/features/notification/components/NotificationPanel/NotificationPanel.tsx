@@ -1,4 +1,4 @@
-import { useNotificationStore } from '../../stores/notificationStore'
+import { useNotificationStore } from '../../stores/notification.store'
 import './NotificationPanel.css'
 
 export function NotificationPanel() {

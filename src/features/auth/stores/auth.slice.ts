@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { AuthState, LoginPayload, RefreshResponse } from '../auth.types'
-import { clearAuthState, loadAuthState, saveAuthState } from './authStorage'
+import { clearAuthState, loadAuthState, saveAuthState } from './auth.storage'
 
 const initialState: AuthState = loadAuthState()
 

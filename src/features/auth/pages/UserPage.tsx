@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { ROUTES } from '../../../constants/route.constants'
 import { NotificationPanel } from '../../notification/components/NotificationPanel/NotificationPanel'
-import { logout } from '../stores/authSlice'
+import { logout } from '../stores/auth.slice'
 
 export default function UserPage() {
   const user = useAppSelector((state) => state.auth.user)

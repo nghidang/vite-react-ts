@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import * as productService from '../services/productService'
+import * as productService from '../services/product.service'
 
 type ProductFilters = { name?: string; category?: string }
 

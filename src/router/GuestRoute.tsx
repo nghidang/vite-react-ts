@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks'
 import { ROUTES } from '../constants/route.constants'
-import { selectIsAuthenticated } from '../features/auth/stores/authSlice'
+import { selectIsAuthenticated } from '../features/auth/stores/auth.slice'
 import type { FromLocationState } from '../types/router.types'
 
 export function GuestRoute() {
