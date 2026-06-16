@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { ALL_CATEGORIES, PRODUCT_CATEGORIES } from '../product.constants'
+import { ALL_CATEGORIES, PRODUCT_CATEGORIES } from '../../product.constants'
 import './CategorySelect.css'
 
 export function CategorySelect() {

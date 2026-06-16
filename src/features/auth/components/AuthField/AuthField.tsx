@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes } from 'react'
 import type { Control, FieldPathByValue, FieldValues } from 'react-hook-form'
-import { ControlledInputText } from '../../../components/common/InputText/ControlledInputText'
+import { ControlledInputText } from '../../../../components/common/InputText/ControlledInputText'
 
 type AuthFieldProps<T extends FieldValues> = {
   control: Control<T>

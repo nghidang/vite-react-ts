@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { useAddProduct } from '../hooks/useAddProduct'
-import { PRODUCT_CATEGORIES } from '../product.constants'
-import { productSchema, type ProductFormValues } from '../product.schemas'
+import { getErrorMessage } from '../../../../utils/getErrorMessage'
+import { useAddProduct } from '../../hooks/useAddProduct'
+import { PRODUCT_CATEGORIES } from '../../product.constants'
+import { productSchema, type ProductFormValues } from '../../product.schemas'
 import './AddProductForm.css'
 
 export function AddProductForm({ onClose }: { onClose: () => void }) {
