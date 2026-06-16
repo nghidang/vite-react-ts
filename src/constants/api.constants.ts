@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:3000/api'
-
 const API_ENDPOINTS = {
   LOGIN: 'login',
   REGISTER: 'register',
@@ -7,4 +5,4 @@ const API_ENDPOINTS = {
   PRODUCTS: 'products',
 }
 
-export { API_ENDPOINTS, BASE_URL }
+export { API_ENDPOINTS }

@@ -1,12 +1,12 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
-import { BASE_URL } from '../constants/api.constants'
+import { API_BASE_URL } from '../configs/env.config'
 import { getStoredToken } from '../features/auth/stores/auth.slice'
 import { refreshAuthToken } from './token.refresh'
 
 type RetriableRequest = InternalAxiosRequestConfig & { _retry?: boolean }
 
 export const axiosClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
