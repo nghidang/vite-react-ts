@@ -6,9 +6,9 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { AddProductForm } from '../components/AddProductForm'
 import { CategorySelect } from '../components/CategorySelect'
 import { useProducts } from '../hooks/useProducts'
-import './List.css'
+import './ProductListPage.css'
 
-export function ProductList() {
+export function ProductListPage() {
   const [searchParams] = useSearchParams()
   const search = searchParams.get('search')
   const category = searchParams.get('category')

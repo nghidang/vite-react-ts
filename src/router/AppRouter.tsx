@@ -1,8 +1,8 @@
 import { lazy } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { ROUTES } from '../constants/route.constants'
-import { Cart } from '../features/cart/pages/Cart'
-import { ProductList } from '../features/product/pages/List'
+import { CartPage } from '../features/cart/pages/CartPage'
+import { ProductListPage } from '../features/product/pages/ProductListPage'
 import { MainLayout } from '../layouts/MainLayout'
 import { MainLayoutAuth } from '../layouts/MainLayoutAuth'
 import { HomePage } from '../pages/HomePage'
@@ -12,7 +12,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'))
 const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'))
 const UserPage = lazy(() => import('../features/auth/pages/UserPage'))
-const ProductDetail = lazy(() => import('../features/product/pages/Detail'))
+const ProductDetailPage = lazy(() => import('../features/product/pages/ProductDetailPage'))
 
 export function AppRouter() {
   return (
@@ -22,9 +22,9 @@ export function AppRouter() {
 
         {/* Route cần đăng nhập */}
         <Route element={<ProtectedRoute />}>
-          <Route path={ROUTES.PRODUCT_LIST} element={<ProductList />} />
-          <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetail />} />
-          <Route path={ROUTES.CART} element={<Cart />} />
+          <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
+          <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
+          <Route path={ROUTES.CART} element={<CartPage />} />
           <Route path={ROUTES.USER} element={<UserPage />} />
         </Route>
       </Route>

@@ -4,7 +4,7 @@ import { useCart } from '../hooks/useCart'
 
 const SAMPLE: Product = { id: 'p1', name: 'Áo thun', price: 150000 }
 
-export function Cart() {
+export function CartPage() {
   const [searchParams] = useSearchParams()
   const { items, dispatch, totalPrice } = useCart()
 
