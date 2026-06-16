@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { LangContext } from '../contexts/LangContext'
-import { translate, type Lang } from '../i18n'
+import { LangContext } from './LangContext'
+import { translate, type Lang } from '.'
 
 /**
  * Hook dịch chuỗi cho component React.

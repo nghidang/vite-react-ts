@@ -1,4 +1,4 @@
-import { LangProvider } from './app/LangProvider'
+import { LangProvider } from './i18n/LangProvider'
 import { AppProviders } from './app/AppProviders'
 import { AppRouter } from './router/AppRouter'
 import './App.css'

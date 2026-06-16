@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { LangContext } from '../../contexts/LangContext'
+import { LangContext } from '../../i18n/LangContext'
 import { LangSwitcher } from '../../components/common/LangSwitcher/LangSwitcher'
 import './Footer.css'
 
