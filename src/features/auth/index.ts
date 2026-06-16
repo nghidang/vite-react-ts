@@ -12,3 +12,4 @@ export {
   tokenRefreshed,
 } from './stores/auth.slice'
 export { refreshAccessToken } from './services/token.service'
+export { authGuestRoutes, authProtectedRoutes } from './auth.routes'

@@ -4,3 +4,4 @@
  */
 export { useCart } from './hooks/useCart'
 export type { CartItem } from './cart.types'
+export { cartRoutes } from './cart.routes'

@@ -1,42 +1,35 @@
-import { lazy } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, useRoutes, type RouteObject } from 'react-router-dom'
 import { ROUTES } from '../constants/route.constants'
-import { CartPage } from '../features/cart/pages/CartPage'
-import { ProductListPage } from '../features/product/pages/ProductListPage'
+import { authGuestRoutes, authProtectedRoutes } from '../features/auth'
+import { cartRoutes } from '../features/cart'
+import { productRoutes } from '../features/product'
 import { MainLayout } from '../layouts/MainLayout'
 import { MainLayoutAuth } from '../layouts/MainLayoutAuth'
 import { HomePage } from '../pages/HomePage'
 import { GuestRoute } from './GuestRoute'
 import { ProtectedRoute } from './ProtectedRoute'
 
-const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'))
-const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'))
-const UserPage = lazy(() => import('../features/auth/pages/UserPage'))
-const ProductDetailPage = lazy(() => import('../features/product/pages/ProductDetailPage'))
+// AppRouter chỉ GHÉP cây layout/guard; danh sách route do từng feature sở hữu và
+// export qua public API (`features/<name>`). Thêm/bớt route → sửa trong feature.
+const routes: RouteObject[] = [
+  {
+    element: <MainLayout />,
+    children: [
+      { path: ROUTES.HOME, element: <HomePage /> },
+      // Route cần đăng nhập
+      {
+        element: <ProtectedRoute />,
+        children: [...productRoutes, ...cartRoutes, ...authProtectedRoutes],
+      },
+    ],
+  },
+  {
+    element: <MainLayoutAuth />,
+    children: [{ element: <GuestRoute />, children: [...authGuestRoutes] }],
+  },
+  { path: '*', element: <Navigate to={ROUTES.HOME} /> },
+]
 
 export function AppRouter() {
-  return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path={ROUTES.HOME} element={<HomePage />} />
-
-        {/* Route cần đăng nhập */}
-        <Route element={<ProtectedRoute />}>
-          <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
-          <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
-          <Route path={ROUTES.CART} element={<CartPage />} />
-          <Route path={ROUTES.USER} element={<UserPage />} />
-        </Route>
-      </Route>
-
-      <Route element={<MainLayoutAuth />}>
-        <Route element={<GuestRoute />}>
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-        </Route>
-      </Route>
-
-      <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
-    </Routes>
-  )
+  return useRoutes(routes)
 }

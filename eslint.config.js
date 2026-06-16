@@ -59,4 +59,12 @@ export default defineConfig([
       ],
     },
   },
+  {
+    // File định nghĩa route là cấu hình (export mảng RouteObject) chứ không phải module
+    // component — fast-refresh không áp dụng, nên tắt rule cho khỏi báo nhầm các `lazy()` cục bộ.
+    files: ['**/*.routes.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])
