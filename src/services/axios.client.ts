@@ -1,6 +1,6 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { API_BASE_URL } from '../configs/env.config'
-import { getStoredToken } from '../features/auth/stores/auth.slice'
+import { getStoredToken } from '../features/auth'
 import { refreshAuthToken } from './token.refresh'
 
 type RetriableRequest = InternalAxiosRequestConfig & { _retry?: boolean }

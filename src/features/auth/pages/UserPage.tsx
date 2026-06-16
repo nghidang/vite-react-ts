@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { ROUTES } from '../../../constants/route.constants'
-import { NotificationPanel } from '../../notification/components/NotificationPanel/NotificationPanel'
+import { NotificationPanel } from '../../notification'
 import { logout } from '../stores/auth.slice'
 
 export default function UserPage() {
