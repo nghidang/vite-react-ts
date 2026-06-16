@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { LangContext } from '../../../contexts/LangContext'
-import { LangSwitcher } from '../../common/LangSwitcher/LangSwitcher'
+import { LangContext } from '../../i18n/LangContext'
+import { LangSwitcher } from '../../components/common/LangSwitcher/LangSwitcher'
 import './Footer.css'
 
 export function Footer() {

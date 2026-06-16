@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../../app/hooks'
 import { ROUTES } from '../../../constants/route.constants'
 import type { FromLocationState } from '../../../types/router.types'
 import type { LoginResponse } from '../auth.types'
-import { loginSuccess } from '../stores/authSlice'
+import { loginSuccess } from '../stores/auth.slice'
 
 /**
  * Side-effect dùng chung sau khi login/register thành công: lưu phiên vào redux rồi điều hướng

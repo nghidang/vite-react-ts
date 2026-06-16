@@ -1,6 +1,7 @@
 import { API_ENDPOINTS } from '../../../constants/api.constants'
-import { axiosClient } from '../../../services/axiosClient'
-import type { NewProduct, Product } from '../product.types'
+import { axiosClient } from '../../../services/axios.client'
+import type { NewProduct, Product } from '../../../types/product.types'
+import { productResponseSchema, productsResponseSchema } from '../product.schemas'
 
 export async function getProducts(
   filters?: { name?: string; category?: string },
@@ -10,17 +11,17 @@ export async function getProducts(
   if (filters?.name) params.name = filters.name
   if (filters?.category) params.category = filters.category
 
-  const { data } = await axiosClient.get<Product[]>(API_ENDPOINTS.PRODUCTS, {
+  const { data } = await axiosClient.get(API_ENDPOINTS.PRODUCTS, {
     params: Object.keys(params).length ? params : undefined,
     signal,
   })
 
-  return data
+  return productsResponseSchema.parse(data)
 }
 
 /** Tạo product mới. Server trả về product đã tạo kèm `id`. */
 export async function addProduct(input: NewProduct): Promise<Product> {
-  const { data } = await axiosClient.post<Product>(API_ENDPOINTS.PRODUCTS, input)
+  const { data } = await axiosClient.post(API_ENDPOINTS.PRODUCTS, input)
 
-  return data
+  return productResponseSchema.parse(data)
 }

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { InvalidAuthDataError } from '../auth.errors'
 import type { LoginCredentials, LoginResponse } from '../auth.types'
-import * as authService from '../services/authService'
+import * as authService from '../services/auth.service'
 
 /**
  * Factory dùng chung cho login/register: gọi service, validate payload, trả về data đã hợp lệ.

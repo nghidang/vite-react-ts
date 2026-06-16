@@ -1,10 +1,17 @@
 import { useSearchParams } from 'react-router-dom'
-import { CartActionType, type Product } from '../cart.types'
+import type { Product } from '../../../types/product.types'
+import { CartActionType } from '../cart.types'
 import { useCart } from '../hooks/useCart'
 
-const SAMPLE: Product = { id: 'p1', name: 'Áo thun', price: 150000 }
+const SAMPLE: Product = {
+  id: 1,
+  name: 'Áo thun',
+  price: 150000,
+  category: 'Thời trang',
+  status: true,
+}
 
-export function Cart() {
+export function CartPage() {
   const [searchParams] = useSearchParams()
   const { items, dispatch, totalPrice } = useCart()
 

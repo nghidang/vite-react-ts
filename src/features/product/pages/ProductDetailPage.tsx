@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import { ROUTES } from '../../../constants/route.constants'
-import { getErrorMessage } from '../../../utils/getErrorMessage'
+import { getErrorMessage } from '../../../helpers/getErrorMessage'
 import { useProduct } from '../hooks/useProduct'
-import './Detail.css'
+import './ProductDetailPage.css'
 
-export default function ProductDetail() {
+export default function ProductDetailPage() {
   const { id } = useParams()
   const { data: product, isPending, error } = useProduct(Number(id))
 

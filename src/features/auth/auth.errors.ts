@@ -1,4 +1,4 @@
-import { getErrorMessage } from '../../utils/getErrorMessage'
+import { getErrorMessage } from '../../helpers/getErrorMessage'
 
 /**
  * Server trả 2xx nhưng payload thiếu user/token (dữ liệu không hợp lệ).

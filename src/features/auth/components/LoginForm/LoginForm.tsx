@@ -1,14 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { ROUTES } from '../../../constants/route.constants'
-import { useTranslation } from '../../../hooks/useTranslation'
-import { resolveAuthError } from '../auth.errors'
-import { createLoginSchema, type LoginFormValues } from '../auth.schemas'
-import { useLogin } from '../hooks/authMutations'
-import { useAuthSuccess } from '../hooks/useAuthSuccess'
-import { AuthField } from './AuthField'
-import './AuthForm.css'
+import { ROUTES } from '../../../../constants/route.constants'
+import { useTranslation } from '../../../../i18n/useTranslation'
+import { resolveAuthError } from '../../auth.errors'
+import { createLoginSchema, type LoginFormValues } from '../../auth.schemas'
+import { useLogin } from '../../hooks/useAuthMutations'
+import { useAuthSuccess } from '../../hooks/useAuthSuccess'
+import { AuthField } from '../AuthField/AuthField'
+import '../AuthForm.css'
 
 export function LoginForm() {
   const { t } = useTranslation()

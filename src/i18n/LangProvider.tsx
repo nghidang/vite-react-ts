@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
-import { LangContext } from '../contexts/LangContext'
+import { LangContext } from './LangContext'
 import useLocalStorage from '../hooks/useLocalStorage'
-import { setActiveLang, type Lang } from '../i18n'
+import { setActiveLang, type Lang } from '.'
 
 export const LangProvider = ({ children }: { children: React.ReactNode }) => {
   const [lang, setLang] = useLocalStorage('lang', 'en')

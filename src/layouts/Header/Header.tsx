@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { useAppSelector } from '../../../app/hooks'
-import { PAGES, ROUTES } from '../../../constants/route.constants'
-import { selectIsAuthenticated } from '../../../features/auth/stores/authSlice'
+import { useAppSelector } from '../../app/hooks'
+import { PAGES, ROUTES } from '../../constants/route.constants'
+import { selectIsAuthenticated } from '../../features/auth/stores/auth.slice'
 import {
   selectUnreadCount,
   useNotificationStore,
-} from '../../../features/notification/stores/notificationStore'
-import { SearchBox } from '../../common/SearchBox/SearchBox'
+} from '../../features/notification/stores/notification.store'
+import { SearchBox } from '../../components/common/SearchBox/SearchBox'
 import './Header.css'
 
 // Các route được phép hiển thị ô search trên Header

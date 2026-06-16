@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import * as productService from '../services/productService'
+import * as productService from '../services/product.service'
 import { productKeys } from './useProducts'
 
 /**
