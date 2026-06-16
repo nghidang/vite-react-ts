@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { ROUTES } from '../../../constants/route.constants'
-import { getErrorMessage } from '../../../utils/getErrorMessage'
+import { getErrorMessage } from '../../../helpers/getErrorMessage'
 import { useProduct } from '../hooks/useProduct'
 import './ProductDetailPage.css'
 
