@@ -1,15 +1,12 @@
-import { LangProvider } from './i18n/LangProvider'
+import './App.css'
 import { AppProviders } from './app/AppProviders'
 import { AppRouter } from './router/AppRouter'
-import './App.css'
 
 function App() {
   return (
-    <LangProvider>
-      <AppProviders>
-        <AppRouter />
-      </AppProviders>
-    </LangProvider>
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
   )
 }
 
