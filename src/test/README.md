@@ -1,8 +1,9 @@
 # Bảng các loại test (test catalog)
 
 Mỗi file dưới đây là **một ví dụ tiêu biểu cho một loại test** trong dự án React + TS này.
-Mục tiêu: học "có thể test những gì" và "test bằng kỹ thuật nào". Tất cả dùng **Vitest +
-React Testing Library** (`yarn test`, `yarn test:run`, `yarn coverage`).
+Mục tiêu: học "có thể test những gì" và "test bằng kỹ thuật nào". Toàn bộ chạy bằng **Vitest**
+(`yarn test`, `yarn test:run`, `yarn coverage`); test có DOM/React dùng thêm **React Testing
+Library**, còn test logic thuần chỉ cần Vitest.
 
 ## Hạ tầng test
 
@@ -15,7 +16,7 @@ React Testing Library** (`yarn test`, `yarn test:run`, `yarn coverage`).
 
 | # | Loại test | Ví dụ | Kỹ thuật chính |
 | --- | --- | --- | --- |
-| 1 | **Hàm thuần (pure function)** | [getErrorMessage.test.ts](../helpers/getErrorMessage.test.ts) | input → output, không cần DOM |
+| 1 | **Hàm thuần (pure function)** | [getErrorMessage.test.ts](../helpers/getErrorMessage.test.ts) · [formatDate.test.ts](../utils/formatDate.test.ts) | input → output, không cần DOM (formatDate: tránh hardcode theo locale) |
 | 2 | **Reducer (`useReducer`)** | [cart.reducer.test.ts](../features/cart/reducer/cart.reducer.test.ts) | gọi reducer với `(state, action)`, kiểm tra immutability |
 | 3 | **Schema validation (zod)** | [auth.schemas.test.ts](../features/auth/auth.schemas.test.ts) | `safeParse`, kiểm tra message + cross-field |
 | 4 | **Custom hook + fake timers** | [useDebouncedValue.test.ts](../hooks/useDebouncedValue.test.ts) | `renderHook`, `act`, `vi.useFakeTimers()` |
