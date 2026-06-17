@@ -11,9 +11,12 @@ yarn dev        # Start Vite dev server with HMR
 yarn build      # Type-check (tsc -b) + bundle for production
 yarn lint       # Run ESLint
 yarn preview    # Preview the production build locally
+yarn test       # Run Vitest in watch mode
+yarn test:run   # Run the test suite once (CI mode)
+yarn coverage   # Run tests once with a v8 coverage report
 ```
 
-There is no test runner configured in this project.
+**Testing — Vitest + React Testing Library.** `jsdom` environment, globals enabled (`describe`/`it`/`expect` need no import). Config lives under the `test` key in `vite.config.ts`; `src/test/setup.ts` registers `@testing-library/jest-dom` matchers and runs `cleanup()` after each test. Test files are colocated as `*.test.ts` / `*.test.tsx` next to the code they cover (see `useDebouncedValue.test.ts`, `InputText.test.tsx`). `src/test/README.md` is a catalog: one example test per category (pure fn, reducer, zod schema, hook, React Query, Redux, Zustand, component, context, form, router, service, single-flight, integration). Use `@testing-library/user-event` for interaction and query by accessible role/label, not test IDs. `vitest/globals` + `@testing-library/jest-dom` types are wired into `tsconfig.app.json`, so `tsc -b` type-checks tests too.
 
 ## Stack
 
