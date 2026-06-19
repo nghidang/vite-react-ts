@@ -7,14 +7,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Use **Yarn** as the package manager (not npm or pnpm).
 
 ```bash
-yarn dev        # Start Vite dev server with HMR
-yarn build      # Type-check (tsc -b) + bundle for production
+yarn dev        # Vite dev server (HMR), default `development` mode = local env
+yarn dev:dev    # Dev server pointed at the shared `dev` backend
+yarn build      # Type-check (tsc -b) + production bundle (--mode production)
+yarn build:dev  # Build for the `dev` environment
+yarn build:test # Build for the `test`/QA environment
+yarn build:prod # Alias of `yarn build` (--mode production)
 yarn lint       # Run ESLint
-yarn preview    # Preview the production build locally
+yarn preview    # Preview a build locally (also preview:dev / preview:test / preview:prod)
 yarn test       # Run Vitest in watch mode
 yarn test:run   # Run the test suite once (CI mode)
 yarn coverage   # Run tests once with a v8 coverage report
 ```
+
+**Environments — 4 of them: `local` / `dev` / `test` / `production`.** Vite forbids `local` as a `--mode` name (it clashes with the `.local` env-file postfix), so **local maps to Vite's default `development` mode** (`yarn dev`, no `--mode`); the other three use `--mode <dev|test|production>`. Each mode loads its own `.env.<mode>` on top of the shared `.env`. Per-env files (`.env.dev`, `.env.test`, `.env.production`) are **committed** — frontend `VITE_*` vars end up in the public bundle, so they hold non-secret config (API URLs, flags), never secrets. The `local` env has no per-mode file: it runs on the shared `.env` defaults (which carry local-friendly values: `VITE_APP_ENV=local`, localhost API) plus your personal `.env.local` (gitignored via `*.local`; copy `.env.example` → `.env.local`). Vitest runs in `test` mode, so it also loads `.env.test` — harmless since tests mock the network. Env vars are read & **validated by zod** in `src/configs/env.config.ts` (fail-fast on missing/invalid), then exposed as the typed `ENV` object (`ENV.APP_ENV`, `ENV.API_BASE_URL`, `ENV.IS_PROD`, …) — import config from there, never `import.meta.env` directly. Add a new var → declare it in `envSchema` **and** in `ImportMetaEnv` (`src/vite-env.d.ts`).
 
 **Testing — Vitest + React Testing Library.** `jsdom` environment, globals enabled (`describe`/`it`/`expect` need no import). Config lives under the `test` key in `vite.config.ts`; `src/test/setup.ts` registers `@testing-library/jest-dom` matchers and runs `cleanup()` after each test. Test files are colocated as `*.test.ts` / `*.test.tsx` next to the code they cover (see `useDebouncedValue.test.ts`, `InputText.test.tsx`). `src/test/README.md` is a catalog: one example test per category (pure fn, reducer, zod schema, hook, React Query, Redux, Zustand, component, context, form, router, service, single-flight, integration). Use `@testing-library/user-event` for interaction and query by accessible role/label, not test IDs. `vitest/globals` + `@testing-library/jest-dom` types are wired into `tsconfig.app.json`, so `tsc -b` type-checks tests too.
 
