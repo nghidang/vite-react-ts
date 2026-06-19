@@ -4,6 +4,15 @@ import { store } from '../app/store'
 import { selectToken } from '../features/auth'
 import { refreshAuthToken } from './token.refresh'
 
+// Cho phép một request tự loại mình khỏi luồng auto-refresh khi gặp 401.
+// Dùng cho endpoint auth (login/register): 401 ở đó là "sai thông tin đăng nhập",
+// KHÔNG phải access token hết hạn → gọi refresh là vô nghĩa (và tốn 1 request thừa).
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    skipAuthRefresh?: boolean
+  }
+}
+
 type RetriableRequest = InternalAxiosRequestConfig & { _retry?: boolean }
 
 export const axiosClient = axios.create({
@@ -28,8 +37,14 @@ axiosClient.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as RetriableRequest | undefined
 
-    // Only react to a 401 once per request, and only if we have something to retry.
-    if (error.response?.status !== 401 || !originalRequest || originalRequest._retry) {
+    // Only react to a 401 once per request, only if we have something to retry,
+    // and never for requests that opted out (auth endpoints).
+    if (
+      error.response?.status !== 401 ||
+      !originalRequest ||
+      originalRequest._retry ||
+      originalRequest.skipAuthRefresh
+    ) {
       return Promise.reject(error)
     }
 
