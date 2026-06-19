@@ -2,3 +2,8 @@
   display: flex;
   gap: 0.5rem;
 }
+
+.notification-panel__hint {
+  color: #b25000;
+  font-size: 0.85rem;
+}

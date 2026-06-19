@@ -60,6 +60,7 @@ Mỗi mục kèm file dẫn chứng để dễ rà lại trong code.
 ### 5. Zustand (local feature state)
 - Store notifications dùng `create` + middleware `persist` (lưu localStorage), tách bạch với react-query (server) và Redux (auth) — `src/features/notification/stores/notification.store.ts`.
 - **Selector riêng** `selectUnreadCount` để component (badge ở Header) chỉ re-render khi số chưa đọc đổi, không phải mọi thay đổi của `items`.
+- **Tách side-effect khỏi store**: Web Notifications API (thông báo cấp OS) được bọc trong `notification.service.ts` (`showOsNotification` / `requestOsPermission` / `getOsPermission`, kiểu `OsPermission`) — store giữ thuần để dễ test, UI xin quyền & bắn thông báo OS qua service (no-op an toàn khi chưa cấp quyền / trình duyệt không hỗ trợ) — `src/features/notification/services/notification.service.ts`, `.../NotificationPanel/NotificationPanel.tsx`.
 
 ### 6. React Router + code splitting
 - **Tất cả provider gom về một chỗ** `AppProviders` theo thứ tự `LangProvider > ReduxProvider > QueryClientProvider > BrowserRouter` (Redux Provider alias `ReduxProvider`); `App.tsx` chỉ render `<AppProviders><AppRouter /></AppProviders>` nên `AppRouter` nằm trong mọi provider — `src/app/AppProviders.tsx`, `src/App.tsx`.
@@ -126,7 +127,7 @@ src/
 │   ├── auth/          # *.slice/*.storage, *.service, *.routes, hooks, components/, pages, *.schemas/*.errors/*.types
 │   ├── product/       # *.service, *.routes, hooks (react-query), *.schemas/*.constants, components/, pages
 │   ├── cart/          # reducer/cart.reducer, *.routes, hooks, pages, cart.types
-│   └── notification/  # *.store (Zustand), components
+│   └── notification/  # *.store (Zustand), *.service (Web Notifications/OS), components
 ├── helpers/       # getErrorMessage
 ├── hooks/         # custom hooks dùng chung (useDebouncedValue, useLocalStorage)
 ├── i18n/          # dịch + LangContext/LangProvider/useTranslation + locales (en/vi)
