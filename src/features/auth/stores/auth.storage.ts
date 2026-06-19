@@ -10,7 +10,6 @@ type PersistedAuth = Pick<AuthState, 'user'>
 const emptyAuthState = (): AuthState => ({
   user: null,
   token: null,
-  refreshToken: null,
   expireAt: null,
 })
 

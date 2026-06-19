@@ -16,7 +16,7 @@ import { refreshAuthToken } from './token.refresh'
 import { refreshAccessToken, logout } from '../features/auth'
 import { store } from '../app/store'
 
-const refreshResponse = { token: 'new-token', refreshToken: 'refresh-2', expireAt: 999 }
+const refreshResponse = { token: 'new-token', expireAt: 999 }
 
 describe('refreshAuthToken (single-flight)', () => {
   beforeEach(() => {

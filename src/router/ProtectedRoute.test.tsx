@@ -9,7 +9,6 @@ import { authReducer } from '../features/auth'
 const empty = {
   user: null as { id: string; username: string } | null,
   token: null as string | null,
-  refreshToken: null as string | null,
   expireAt: null as number | null,
 }
 
