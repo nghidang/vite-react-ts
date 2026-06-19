@@ -9,9 +9,18 @@ interface NotificationState {
   clear: () => void
 }
 
-// Tạo id không phụ thuộc Date.now/Math.random để dễ test; đủ unique cho client state
+// Tạo id không phụ thuộc Date.now/Math.random để dễ test; đủ unique cho client state.
+// `seq` được khôi phục từ các id đã persist khi rehydrate (xem onRehydrateStorage)
+// để id mới không trùng id cũ sau khi reload trang.
 let seq = 0
 const nextId = () => `n_${++seq}`
+
+// Lấy số thứ tự lớn nhất từ các id dạng `n_<số>` để seed lại `seq`.
+const highestSeq = (items: AppNotification[]) =>
+  items.reduce((max, item) => {
+    const n = Number(item.id.slice(2))
+    return Number.isFinite(n) && n > max ? n : max
+  }, 0)
 
 export const useNotificationStore = create<NotificationState>()(
   persist(
@@ -27,7 +36,14 @@ export const useNotificationStore = create<NotificationState>()(
         })),
       clear: () => set({ items: [] }),
     }),
-    { name: 'notifications' }
+    {
+      name: 'notifications',
+      // Sau khi khôi phục từ localStorage, tiếp tục đánh số từ id lớn nhất đã có
+      // → tránh `add()` sinh ra id trùng (vd. `n_1`) với notification cũ.
+      onRehydrateStorage: () => (state) => {
+        if (state) seq = highestSeq(state.items)
+      },
+    }
   )
 )
 
