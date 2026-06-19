@@ -1,8 +1,8 @@
 const API_ENDPOINTS = {
   LOGIN: 'login',
   REGISTER: 'register',
-  LOGOUT: 'logout',
-  REFRESH: 'refresh-token',
+  LOGOUT: 'auth/logout',
+  REFRESH: 'auth/refresh',
   PRODUCTS: 'products',
 }
 
