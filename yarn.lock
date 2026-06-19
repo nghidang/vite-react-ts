@@ -610,6 +610,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.61.0":
+  version: 1.61.0
+  resolution: "@playwright/test@npm:1.61.0"
+  dependencies:
+    playwright: 1.61.0
+  bin:
+    playwright: cli.js
+  checksum: d9aeb311a5ee81837e011f096aefc32f90925c9b78e8fe9415f10a47b3e1eb58c00259f07092475e68b00c0b99304f39073077e4c4645937773684548634d2b7
+  languageName: node
+  linkType: hard
+
 "@react-grab/cli@npm:0.1.44":
   version: 0.1.44
   resolution: "@react-grab/cli@npm:0.1.44"
@@ -2052,12 +2063,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fsevents@npm:2.3.2":
+  version: 2.3.2
+  resolution: "fsevents@npm:2.3.2"
+  dependencies:
+    node-gyp: latest
+  checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
 "fsevents@npm:~2.3.3":
   version: 2.3.3
   resolution: "fsevents@npm:2.3.3"
   dependencies:
     node-gyp: latest
   checksum: 11e6ea6fea15e42461fc55b4b0e4a0a3c654faa567f1877dbd353f39156f69def97a69936d1746619d656c4b93de2238bf731f6085a03a50cabf287c9d024317
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>":
+  version: 2.3.2
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  dependencies:
+    node-gyp: latest
   conditions: os=darwin
   languageName: node
   linkType: hard
@@ -2906,6 +2936,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.61.0":
+  version: 1.61.0
+  resolution: "playwright-core@npm:1.61.0"
+  bin:
+    playwright-core: cli.js
+  checksum: 0ea4653c7594388bafa39209a1ec0353aeeb977a905da22cfe60497be03b717944ce6e749232af7bf894fca3c217e7a2b624d87dde15ede60dad3abbd00c7598
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.61.0":
+  version: 1.61.0
+  resolution: "playwright@npm:1.61.0"
+  dependencies:
+    fsevents: 2.3.2
+    playwright-core: 1.61.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: e9b3225ced35f29dcda9829362434151eec9f9bf41be1416104107eea1b9ea499e512a8483a24c0cb7ad3efc9066bf45ed0a64407c7877afa2546c4561bb6bd5
+  languageName: node
+  linkType: hard
+
 "postcss@npm:^8.5.15":
   version: 8.5.15
   resolution: "postcss@npm:8.5.15"
@@ -3598,6 +3652,7 @@ __metadata:
   dependencies:
     "@eslint/js": ^10.0.1
     "@hookform/resolvers": ^5.4.0
+    "@playwright/test": ^1.61.0
     "@reduxjs/toolkit": ^2.12.0
     "@tanstack/react-query": ^5.101.0
     "@testing-library/dom": ^10.4.1

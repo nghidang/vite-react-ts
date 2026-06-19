@@ -33,6 +33,20 @@ Library**, còn test logic thuần chỉ cần Vitest.
 | 15 | **Module có state (single-flight)** | [token.refresh.test.ts](../services/token.refresh.test.ts) | mock 1 phần module, gộp promise đồng thời |
 | 16 | **Integration (nhiều mảnh ghép)** | [useTranslation.test.tsx](../i18n/useTranslation.test.tsx) | Provider + component + persistence cùng lúc |
 
+## E2E (end-to-end) — tách riêng, dùng Playwright
+
+Khác với 16 loại trên (unit/integration chạy bằng **Vitest + jsdom**), E2E chạy app **thật trong
+trình duyệt thật** (Chromium) và chặn HTTP ở tầng mạng.
+
+| Phạm vi | Test mẫu | Lệnh |
+| --- | --- | --- |
+| **E2E luồng login** | [e2e/login.spec.ts](../../e2e/login.spec.ts) | `yarn test:e2e` (UI: `yarn test:e2e:ui`) |
+
+- File E2E nằm ở `e2e/*.spec.ts` (ngoài `src/`), Vitest **không** đụng tới (xem `include` trong `vite.config.ts`).
+- Mock backend bằng `page.route('**/api/login', ...)` → test tự chạy, không cần server `:3000`.
+- Bài học rút ra từ test mẫu: E2E lộ ra hành vi **tích hợp** (interceptor 401 → refresh token) mà
+  unit test mock-ở-tầng-module không thấy.
+
 ## Quy ước
 
 - File test đặt **cạnh** code: `*.test.ts` / `*.test.tsx`.
