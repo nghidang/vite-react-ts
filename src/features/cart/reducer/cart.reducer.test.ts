@@ -50,6 +50,22 @@ describe('cartReducer', () => {
     expect(dec.find((i) => i.product.id === 1)?.quantity).toBe(1)
   })
 
+  it('UPDATE_QUANTITY removes the item when quantity drops to zero or below', () => {
+    const state = [lineItem(1, 1), lineItem(2, 3)]
+
+    const toZero = cartReducer(state, {
+      type: CartActionType.UPDATE_QUANTITY,
+      payload: { productId: 1, delta: -1 },
+    })
+    expect(toZero).toEqual([lineItem(2, 3)])
+
+    const belowZero = cartReducer(state, {
+      type: CartActionType.UPDATE_QUANTITY,
+      payload: { productId: 1, delta: -5 },
+    })
+    expect(belowZero).toEqual([lineItem(2, 3)])
+  })
+
   it('CLEAR_CART empties the cart', () => {
     expect(cartReducer([lineItem(1, 5)], { type: CartActionType.CLEAR_CART })).toEqual([])
   })
