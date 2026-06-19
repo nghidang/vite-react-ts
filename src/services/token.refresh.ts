@@ -1,10 +1,5 @@
 import { store } from '../app/store'
-import {
-  getStoredRefreshToken,
-  logout,
-  refreshAccessToken,
-  tokenRefreshed,
-} from '../features/auth'
+import { logout, refreshAccessToken, tokenRefreshed } from '../features/auth'
 
 let refreshPromise: Promise<string> | null = null
 
@@ -22,18 +17,13 @@ export function refreshAuthToken(): Promise<string> {
 }
 
 async function runRefresh(): Promise<string> {
-  const refreshToken = getStoredRefreshToken()
-  if (!refreshToken) {
-    store.dispatch(logout())
-    throw new Error('No refresh token available')
-  }
-
   try {
-    const data = await refreshAccessToken(refreshToken)
+    // Không truyền refresh token từ JS — server đọc nó từ cookie HttpOnly.
+    const data = await refreshAccessToken()
     store.dispatch(tokenRefreshed(data))
     return data.token
   } catch (error) {
-    // Refresh token is invalid/expired too — give up and log the user out.
+    // Cookie thiếu/hết hạn hoặc bị server từ chối → đăng xuất.
     store.dispatch(logout())
     throw error
   }

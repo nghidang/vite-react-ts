@@ -1,6 +1,7 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { ENV } from '../configs/env.config'
-import { getStoredToken } from '../features/auth'
+import { store } from '../app/store'
+import { selectToken } from '../features/auth'
 import { refreshAuthToken } from './token.refresh'
 
 type RetriableRequest = InternalAxiosRequestConfig & { _retry?: boolean }
@@ -14,7 +15,7 @@ export const axiosClient = axios.create({
 
 // Attach the current access token to every outgoing request.
 axiosClient.interceptors.request.use((config) => {
-  const token = getStoredToken()
+  const token = selectToken(store.getState())
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
