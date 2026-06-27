@@ -1,7 +1,12 @@
 /* ============================================================
    button.module.css
    ⚛️  REACT WEB — chỉ dùng cho React web
-   Giá trị từ Figma Design System Community
+   
+   Yêu cầu: colors.tokens.css và spacing.tokens.css
+   phải được import global (main.css / _app.tsx).
+   
+   Sizes: large.paddingV (14px) và tiny.paddingV (6px)
+   không có trong spacing scale → dùng raw value.
    ============================================================ */
 
 /* ── Base ─────────────────────────────────────────────────── */
@@ -10,7 +15,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--spacing-xs);        /* 8px */
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
@@ -31,76 +36,101 @@
 }
 
 /* ── Sizes ────────────────────────────────────────────────── */
-.giant  { padding: 16px 24px; border-radius: 12px; font-size: 18px; line-height: 24px; }
-.large  { padding: 14px 20px; border-radius: 12px; font-size: 16px; line-height: 20px; }
-.medium { padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 16px; }
-.small  { padding:  8px 12px; border-radius:  8px; font-size: 12px; line-height: 16px; }
-.tiny   { padding:  6px  8px; border-radius:  8px; font-size: 10px; line-height: 12px; }
+.giant {
+  padding: var(--spacing-md) var(--spacing-xl);  /* 16px 24px */
+  border-radius: var(--radius-sm);               /* 12px */
+  font-size: 18px;
+  line-height: 24px;
+}
+.large {
+  padding: 14px var(--spacing-lg);               /* 14px 20px — 14 not in scale */
+  border-radius: var(--radius-sm);               /* 12px */
+  font-size: 16px;
+  line-height: 20px;
+}
+.medium {
+  padding: var(--spacing-sm) var(--spacing-md);  /* 12px 16px */
+  border-radius: var(--radius-sm);               /* 12px */
+  font-size: 14px;
+  line-height: 16px;
+}
+.small {
+  padding: var(--spacing-xs) var(--spacing-sm);  /* 8px 12px */
+  border-radius: var(--radius-xs);               /* 8px */
+  font-size: 12px;
+  line-height: 16px;
+}
+.tiny {
+  padding: 6px var(--spacing-xs);                /* 6px 8px — 6 not in scale */
+  border-radius: var(--radius-xs);               /* 8px */
+  font-size: 10px;
+  line-height: 12px;
+}
 
 /* ── Filled ───────────────────────────────────────────────── */
 .filled {
-  background-color: #4E61F6;
-  color: #FFFFFF;
+  background-color: var(--color-primary-500);
+  color: var(--color-white-100);
   border: none;
 }
 .filled:hover:not(:disabled):not(.loading) {
-  background-color: #3745AF;
+  background-color: var(--color-primary-700);
 }
 .filled:active:not(:disabled):not(.loading) {
-  background-color: #2B3587;
+  background-color: var(--color-primary-800);
 }
 .filled:focus-visible {
-  outline: 3px solid #AEB6FB;
+  outline: 3px solid var(--color-primary-200);
   outline-offset: 1px;
 }
 .filled:disabled,
 .filled.loading {
-  background-color: #E5E7EA;
-  color: #9EA2AE;
+  background-color: var(--color-grey-200);
+  color: var(--color-grey-400);
 }
 
 /* ── Outline ──────────────────────────────────────────────── */
 .outline {
   background-color: transparent;
-  color: #4E61F6;
-  border: 1.5px solid #4E61F6;
+  color: var(--color-primary-500);
+  border: 1.5px solid var(--color-primary-500);
 }
 .outline:hover:not(:disabled):not(.loading) {
-  background-color: #EDEFFE;
+  background-color: var(--color-primary-50);
 }
 .outline:active:not(:disabled):not(.loading) {
-  background-color: #C8CEFC;
+  background-color: var(--color-primary-100);
 }
 .outline:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px #AEB6FB;
+  box-shadow: 0 0 0 3px var(--color-primary-200);
 }
 .outline:disabled,
 .outline.loading {
-  color: #9EA2AE;
-  border-color: #9EA2AE;
+  color: var(--color-grey-400);
+  border-color: var(--color-grey-400);
   background-color: transparent;
 }
 
 /* ── Clear (ghost) ────────────────────────────────────────── */
 .clear {
   background-color: transparent;
-  color: #4E61F6;
+  color: var(--color-primary-500);
   border: none;
 }
 .clear:hover:not(:disabled):not(.loading) {
-  background-color: #EDEFFE;
+  background-color: var(--color-primary-50);
 }
 .clear:active:not(:disabled):not(.loading) {
-  background-color: #C8CEFC;
+  background-color: var(--color-primary-100);
 }
 .clear:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px #AEB6FB;
+  box-shadow: 0 0 0 3px var(--color-primary-200);
 }
 .clear:disabled,
 .clear.loading {
-  color: #9EA2AE;
+  color: var(--color-grey-400);
   background-color: transparent;
 }
 
@@ -111,7 +141,7 @@
 
 .spinner {
   flex-shrink: 0;
-  width: 1em;         /* scale với font-size của size đang dùng */
+  width: 1em;
   height: 1em;
   border: 2px solid transparent;
   border-top-color: currentColor;
