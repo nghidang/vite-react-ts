@@ -1,45 +1,60 @@
-function resolveButtonStyles({ variant, appearance }) {
-  return buttonStyles[variant]?.[appearance]
+// ============================================================
+// Button.tsx
+// ⚛️  REACT WEB — chỉ dùng cho React web
+// ============================================================
+
+import clsx from 'clsx'
+import type { CSSProperties } from 'react'
+import styles from './button.module.css'
+import type { ButtonBaseProps } from './button.types'
+
+type ButtonProps = ButtonBaseProps & {
+  /** HTML button type. Default: 'button' */
+  type?:      'button' | 'submit' | 'reset'
+  onClick?:   () => void
+  className?: string
+  style?:     CSSProperties
 }
 
 export function Button({
-  variant = 'primary',
-  appearance = 'filled',
-  size = 'md',
-  disabled,
+  variant   = 'filled',
+  size      = 'medium',
+  disabled  = false,
+  loading   = false,
+  leftIcon,
+  rightIcon,
   children,
-}) {
-  const styles = resolveButtonStyles({ variant, appearance })
+  onClick,
+  type      = 'button',
+  className,
+  style,
+}: ButtonProps) {
+  const isDisabled = disabled || loading
 
   return (
     <button
-      style={{
-        backgroundColor: styles.bg,
-        color: styles.color,
-        borderColor: styles.border,
-      }}
-      className="transition"
-      disabled={disabled}
+      type={type}
+      disabled={isDisabled}
+      onClick={onClick}
+      className={clsx(
+        styles.btn,
+        styles[variant],
+        styles[size],
+        loading && styles.loading,
+        className,
+      )}
+      style={style}
+      aria-disabled={isDisabled}
+      aria-busy={loading}
     >
+      {loading
+        ? <span className={styles.spinner} aria-hidden="true" />
+        : leftIcon
+      }
+
       {children}
+
+      {!loading && rightIcon}
     </button>
   )
 }
-
-// function getButtonClass({ variant, appearance }) {
-//   const s = buttonStyles[variant][appearance];
-
-//   return `
-//     ${s.base || ""}
-//     hover:${s.hover || ""}
-//     active:${s.active || ""}
-//   `;
-// }
-
-// export function Button(props) {
-//   const { variant = 'primary', appearance = 'filled' } = props
-
-//   const className = getButtonClass({ variant, appearance })
-
-//   return <button className={className}>{props.children}</button>
-// }

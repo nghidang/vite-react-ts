@@ -1,0 +1,121 @@
+/* ============================================================
+   button.module.css
+   ⚛️  REACT WEB — chỉ dùng cho React web
+   Giá trị từ Figma Design System Community
+   ============================================================ */
+
+/* ── Base ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+  transition:
+    background-color 0.15s ease,
+    border-color     0.15s ease,
+    box-shadow       0.15s ease;
+}
+
+.btn:disabled,
+.btn.loading {
+  cursor: not-allowed;
+}
+
+/* ── Sizes ────────────────────────────────────────────────── */
+.giant  { padding: 16px 24px; border-radius: 12px; font-size: 18px; line-height: 24px; }
+.large  { padding: 14px 20px; border-radius: 12px; font-size: 16px; line-height: 20px; }
+.medium { padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 16px; }
+.small  { padding:  8px 12px; border-radius:  8px; font-size: 12px; line-height: 16px; }
+.tiny   { padding:  6px  8px; border-radius:  8px; font-size: 10px; line-height: 12px; }
+
+/* ── Filled ───────────────────────────────────────────────── */
+.filled {
+  background-color: #4E61F6;
+  color: #FFFFFF;
+  border: none;
+}
+.filled:hover:not(:disabled):not(.loading) {
+  background-color: #3745AF;
+}
+.filled:active:not(:disabled):not(.loading) {
+  background-color: #2B3587;
+}
+.filled:focus-visible {
+  outline: 3px solid #AEB6FB;
+  outline-offset: 1px;
+}
+.filled:disabled,
+.filled.loading {
+  background-color: #E5E7EA;
+  color: #9EA2AE;
+}
+
+/* ── Outline ──────────────────────────────────────────────── */
+.outline {
+  background-color: transparent;
+  color: #4E61F6;
+  border: 1.5px solid #4E61F6;
+}
+.outline:hover:not(:disabled):not(.loading) {
+  background-color: #EDEFFE;
+}
+.outline:active:not(:disabled):not(.loading) {
+  background-color: #C8CEFC;
+}
+.outline:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #AEB6FB;
+}
+.outline:disabled,
+.outline.loading {
+  color: #9EA2AE;
+  border-color: #9EA2AE;
+  background-color: transparent;
+}
+
+/* ── Clear (ghost) ────────────────────────────────────────── */
+.clear {
+  background-color: transparent;
+  color: #4E61F6;
+  border: none;
+}
+.clear:hover:not(:disabled):not(.loading) {
+  background-color: #EDEFFE;
+}
+.clear:active:not(:disabled):not(.loading) {
+  background-color: #C8CEFC;
+}
+.clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #AEB6FB;
+}
+.clear:disabled,
+.clear.loading {
+  color: #9EA2AE;
+  background-color: transparent;
+}
+
+/* ── Loading spinner ──────────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  flex-shrink: 0;
+  width: 1em;         /* scale với font-size của size đang dùng */
+  height: 1em;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
