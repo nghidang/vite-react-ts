@@ -1,6 +1,6 @@
-import { colors } from './tokens'
+import { colors } from '../tokens/colors'
 
-function getColor(scale: string, shade: number) {
+function getColor(scale: keyof typeof colors, shade: keyof (typeof colors)[typeof scale]): string {
   return colors[scale][shade]
 }
 

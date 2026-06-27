@@ -7,7 +7,7 @@ export type Variant =
   | 'info'
   | 'neutral'
 
-const variantColorMap = {
+export const variantColorMap = {
   primary: 'primary',
   secondary: 'grey',
   success: 'green',
