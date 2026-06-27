@@ -1,0 +1,71 @@
+.base {
+    margin: 0;
+}
+
+/* headings */
+.h1 {
+    font-size: 48px;
+    line-height: 58px;
+    font-weight: 600;
+}
+
+.h2 {
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 600;
+}
+
+.h3 {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+}
+
+.h4 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+}
+
+.h5 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+/* text */
+.body {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.body-sm {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.caption {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+/* semantic */
+.label {
+    font-weight: 500;
+}
+
+.button {
+    font-weight: 600;
+}
+
+/* inline helpers */
+.highlight {
+    font-weight: 600;
+    color: var(--primary-600);
+}
+
+.link {
+    color: var(--primary-500);
+    cursor: pointer;
+    text-decoration: underline;
+}
