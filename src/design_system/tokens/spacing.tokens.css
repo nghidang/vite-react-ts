@@ -1,0 +1,107 @@
+/* ================================================================
+   Spacing & Border Radius Design Tokens
+   Source: Figma — Design System Community (design-tokens_tokens.json)
+   
+   Primitive scale (shared base):
+     0 → 0px  |  1 → 4px  |  2 → 8px
+     3 → 12px |  4 → 16px |  5 → 20px | 6 → 24px
+   ================================================================ */
+
+:root {
+
+  /* ── Primitive scale (internal reference) ────────────────────── */
+  --primitive-space-0: 0px;
+  --primitive-space-1: 4px;
+  --primitive-space-2: 8px;
+  --primitive-space-3: 12px;
+  --primitive-space-4: 16px;
+  --primitive-space-5: 20px;
+  --primitive-space-6: 24px;
+
+
+  /* ================================================================
+     SPACING TOKENS
+     Use for: padding, margin, gap, width, height
+     ================================================================ */
+
+  --spacing-none: var(--primitive-space-0);  /*  0px */
+  --spacing-xxs:  var(--primitive-space-1);  /*  4px */
+  --spacing-xs:   var(--primitive-space-2);  /*  8px */
+  --spacing-sm:   var(--primitive-space-3);  /* 12px */
+  --spacing-md:   var(--primitive-space-4);  /* 16px */
+  --spacing-lg:   var(--primitive-space-5);  /* 20px */
+  --spacing-xl:   var(--primitive-space-6);  /* 24px */
+
+
+  /* ================================================================
+     BORDER RADIUS TOKENS
+     Use for: border-radius on components
+     ================================================================ */
+
+  --radius-xxs: var(--primitive-space-1);  /*  4px — chip, badge, tag */
+  --radius-xs:  var(--primitive-space-2);  /*  8px — button, input    */
+  --radius-sm:  var(--primitive-space-3);  /* 12px — card small       */
+  --radius-md:  var(--primitive-space-4);  /* 16px — card default     */
+  --radius-lg:  var(--primitive-space-5);  /* 20px — card large       */
+  --radius-xl:  var(--primitive-space-6);  /* 24px — modal, container */
+
+  /* Alias: full pill shape */
+  --radius-full: 9999px;
+
+
+  /* ================================================================
+     SEMANTIC SPACING — component-level slots
+     ================================================================ */
+
+  /* Button padding */
+  --spacing-btn-y-giant:  var(--spacing-sm);   /* 12px */
+  --spacing-btn-x-giant:  var(--spacing-xl);   /* 24px */
+  --spacing-btn-y-large:  var(--spacing-xs);   /*  8px */
+  --spacing-btn-x-large:  var(--spacing-lg);   /* 20px */
+  --spacing-btn-y-medium: var(--spacing-xs);   /*  8px */
+  --spacing-btn-x-medium: var(--spacing-md);   /* 16px */
+  --spacing-btn-y-small:  var(--spacing-xxs);  /*  4px */
+  --spacing-btn-x-small:  var(--spacing-sm);   /* 12px */
+
+  /* Button border radius */
+  --radius-btn: var(--radius-xs);   /* 8px — all button sizes */
+
+  /* Card */
+  --spacing-card-padding: var(--spacing-md);   /* 16px */
+  --radius-card:          var(--radius-sm);    /* 12px */
+
+  /* Input */
+  --spacing-input-y: var(--spacing-xs);   /*  8px */
+  --spacing-input-x: var(--spacing-sm);   /* 12px */
+  --radius-input:    var(--radius-xs);    /*  8px */
+
+  /* Modal / Dialog */
+  --spacing-modal-padding: var(--spacing-xl);  /* 24px */
+  --radius-modal:          var(--radius-xl);   /* 24px */
+
+  /* Layout gap */
+  --spacing-gap-xs: var(--spacing-xs);  /*  8px */
+  --spacing-gap-sm: var(--spacing-sm);  /* 12px */
+  --spacing-gap-md: var(--spacing-md);  /* 16px */
+  --spacing-gap-lg: var(--spacing-xl);  /* 24px */
+}
+
+
+/* ================================================================
+   Usage examples
+
+   .btn-giant { 
+     padding: var(--spacing-btn-y-giant) var(--spacing-btn-x-giant);
+     border-radius: var(--radius-btn);
+   }
+
+   .card {
+     padding: var(--spacing-card-padding);
+     border-radius: var(--radius-card);
+   }
+
+   .modal {
+     padding: var(--spacing-modal-padding);
+     border-radius: var(--radius-modal);
+   }
+================================================================ */
