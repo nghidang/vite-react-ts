@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { Button, Typography } from '../design_system'
 import ItemInfo from './components/ItemInfo'
 
 export function HomePage() {
@@ -23,6 +24,30 @@ export function HomePage() {
       {items.map((item) => (
         <ItemInfo key={item.id} item={item} onDelete={handleDelete} />
       ))}
+
+      <Typography variant="h2" as="div">
+        Please enter your{' '}
+        <Typography.Highlight>
+          <Typography.Link
+            onClick={() => {
+              console.log('email clicked')
+            }}
+          >
+            email
+          </Typography.Link>
+        </Typography.Highlight>{' '}
+        to continue
+      </Typography>
+
+      <Button variant="primary" appearance="filled" size="giant">
+        Primary
+      </Button>
+      <Button variant="danger" appearance="outline" size="medium">
+        Danger
+      </Button>
+      <Button variant="success" appearance="clear" size="tiny">
+        Success
+      </Button>
     </div>
   )
 }
