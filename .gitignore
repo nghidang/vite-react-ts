@@ -33,3 +33,7 @@ coverage
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+stories/
+
+*storybook.log
+storybook-static
