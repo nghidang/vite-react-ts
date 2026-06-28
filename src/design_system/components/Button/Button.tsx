@@ -1,6 +1,6 @@
 // ============================================================
 // Button.tsx
-// ⚛️  REACT WEB — chỉ dùng cho React web
+// ⚛️  REACT WEB
 // ============================================================
 
 import clsx from 'clsx'
@@ -9,7 +9,6 @@ import styles from './button.module.css'
 import type { ButtonBaseProps } from './button.types'
 
 type ButtonProps = ButtonBaseProps & {
-  /** HTML button type. Default: 'button' */
   type?:      'button' | 'submit' | 'reset'
   onClick?:   () => void
   className?: string
@@ -17,15 +16,16 @@ type ButtonProps = ButtonBaseProps & {
 }
 
 export function Button({
-  variant   = 'filled',
-  size      = 'medium',
-  disabled  = false,
-  loading   = false,
+  appearance = 'filled',
+  variant    = 'primary',
+  size       = 'medium',
+  disabled   = false,
+  loading    = false,
   leftIcon,
   rightIcon,
   children,
   onClick,
-  type      = 'button',
+  type       = 'button',
   className,
   style,
 }: ButtonProps) {
@@ -38,7 +38,8 @@ export function Button({
       onClick={onClick}
       className={clsx(
         styles.btn,
-        styles[variant],
+        styles[variant],     // primary | danger | success  → sets --btn-* vars
+        styles[appearance],  // filled | outline | clear     → uses --btn-* vars
         styles[size],
         loading && styles.loading,
         className,
@@ -51,9 +52,7 @@ export function Button({
         ? <span className={styles.spinner} aria-hidden="true" />
         : leftIcon
       }
-
       {children}
-
       {!loading && rightIcon}
     </button>
   )

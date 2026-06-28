@@ -1,12 +1,12 @@
 /* ============================================================
    button.module.css
-   ⚛️  REACT WEB — chỉ dùng cho React web
-   
+   ⚛️  REACT WEB
+
    Yêu cầu: colors.tokens.css và spacing.tokens.css
    phải được import global (main.css / _app.tsx).
-   
-   Sizes: large.paddingV (14px) và tiny.paddingV (6px)
-   không có trong spacing scale → dùng raw value.
+
+   Pattern: variant class set --btn-* CSS vars,
+            appearance class dùng các vars đó.
    ============================================================ */
 
 /* ── Base ─────────────────────────────────────────────────── */
@@ -15,7 +15,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);        /* 8px */
+  gap: var(--spacing-xs);
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
@@ -36,51 +36,57 @@
 }
 
 /* ── Sizes ────────────────────────────────────────────────── */
-.giant {
-  padding: var(--spacing-md) var(--spacing-xl);  /* 16px 24px */
-  border-radius: var(--radius-sm);               /* 12px */
-  font-size: 18px;
-  line-height: 24px;
+.giant  { padding: var(--spacing-md) var(--spacing-xl); border-radius: var(--radius-sm); font-size: 18px; line-height: 24px; }
+.large  { padding: 14px var(--spacing-lg);              border-radius: var(--radius-sm); font-size: 16px; line-height: 20px; }
+.medium { padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--radius-sm); font-size: 14px; line-height: 16px; }
+.small  { padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--radius-xs); font-size: 12px; line-height: 16px; }
+.tiny   { padding: 6px var(--spacing-xs);               border-radius: var(--radius-xs); font-size: 10px; line-height: 12px; }
+
+/* ================================================================
+   VARIANTS — định nghĩa --btn-* color variables
+   Appearance classes bên dưới dùng các vars này.
+   ================================================================ */
+.primary {
+  --btn-accent:       var(--color-primary-500);
+  --btn-accent-hover: var(--color-primary-700);
+  --btn-accent-press: var(--color-primary-800);
+  --btn-accent-light: var(--color-primary-50);
+  --btn-accent-mid:   var(--color-primary-100);
+  --btn-accent-ring:  var(--color-primary-200);
 }
-.large {
-  padding: 14px var(--spacing-lg);               /* 14px 20px — 14 not in scale */
-  border-radius: var(--radius-sm);               /* 12px */
-  font-size: 16px;
-  line-height: 20px;
+
+.danger {
+  --btn-accent:       var(--color-red-500);
+  --btn-accent-hover: var(--color-red-700);
+  --btn-accent-press: var(--color-red-800);
+  --btn-accent-light: var(--color-red-50);
+  --btn-accent-mid:   var(--color-red-100);
+  --btn-accent-ring:  var(--color-red-200);
 }
-.medium {
-  padding: var(--spacing-sm) var(--spacing-md);  /* 12px 16px */
-  border-radius: var(--radius-sm);               /* 12px */
-  font-size: 14px;
-  line-height: 16px;
+
+.success {
+  --btn-accent:       var(--color-green-500);
+  --btn-accent-hover: var(--color-green-700);
+  --btn-accent-press: var(--color-green-800);
+  --btn-accent-light: var(--color-green-50);
+  --btn-accent-mid:   var(--color-green-100);
+  --btn-accent-ring:  var(--color-green-200);
 }
-.small {
-  padding: var(--spacing-xs) var(--spacing-sm);  /* 8px 12px */
-  border-radius: var(--radius-xs);               /* 8px */
-  font-size: 12px;
-  line-height: 16px;
-}
-.tiny {
-  padding: 6px var(--spacing-xs);                /* 6px 8px — 6 not in scale */
-  border-radius: var(--radius-xs);               /* 8px */
-  font-size: 10px;
-  line-height: 12px;
-}
+
+/* ================================================================
+   APPEARANCES — dùng --btn-* vars từ variant
+   ================================================================ */
 
 /* ── Filled ───────────────────────────────────────────────── */
 .filled {
-  background-color: var(--color-primary-500);
+  background-color: var(--btn-accent);
   color: var(--color-white-100);
   border: none;
 }
-.filled:hover:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-700);
-}
-.filled:active:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-800);
-}
+.filled:hover:not(:disabled):not(.loading)  { background-color: var(--btn-accent-hover); }
+.filled:active:not(:disabled):not(.loading) { background-color: var(--btn-accent-press); }
 .filled:focus-visible {
-  outline: 3px solid var(--color-primary-200);
+  outline: 3px solid var(--btn-accent-ring);
   outline-offset: 1px;
 }
 .filled:disabled,
@@ -92,18 +98,14 @@
 /* ── Outline ──────────────────────────────────────────────── */
 .outline {
   background-color: transparent;
-  color: var(--color-primary-500);
-  border: 1.5px solid var(--color-primary-500);
+  color: var(--btn-accent);
+  border: 1.5px solid var(--btn-accent);
 }
-.outline:hover:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-50);
-}
-.outline:active:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-100);
-}
+.outline:hover:not(:disabled):not(.loading)  { background-color: var(--btn-accent-light); }
+.outline:active:not(:disabled):not(.loading) { background-color: var(--btn-accent-mid); }
 .outline:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-primary-200);
+  box-shadow: 0 0 0 3px var(--btn-accent-ring);
 }
 .outline:disabled,
 .outline.loading {
@@ -112,21 +114,17 @@
   background-color: transparent;
 }
 
-/* ── Clear (ghost) ────────────────────────────────────────── */
+/* ── Clear ────────────────────────────────────────────────── */
 .clear {
   background-color: transparent;
-  color: var(--color-primary-500);
+  color: var(--btn-accent);
   border: none;
 }
-.clear:hover:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-50);
-}
-.clear:active:not(:disabled):not(.loading) {
-  background-color: var(--color-primary-100);
-}
+.clear:hover:not(:disabled):not(.loading)  { background-color: var(--btn-accent-light); }
+.clear:active:not(:disabled):not(.loading) { background-color: var(--btn-accent-mid); }
 .clear:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-primary-200);
+  box-shadow: 0 0 0 3px var(--btn-accent-ring);
 }
 .clear:disabled,
 .clear.loading {
@@ -135,9 +133,7 @@
 }
 
 /* ── Loading spinner ──────────────────────────────────────── */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .spinner {
   flex-shrink: 0;
