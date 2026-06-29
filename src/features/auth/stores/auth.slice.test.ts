@@ -7,11 +7,10 @@ import reducer, {
 } from './auth.slice'
 import type { AuthState } from '../auth.types'
 
-const empty: AuthState = { user: null, token: null, refreshToken: null, expireAt: null }
+const empty: AuthState = { user: null, token: null, expireAt: null }
 const loginPayload = {
   user: { id: '1', username: 'john' },
   token: 'access-1',
-  refreshToken: 'refresh-1',
   expireAt: 1000,
 }
 
@@ -20,23 +19,24 @@ const storedAuth = () => JSON.parse(localStorage.getItem('auth') ?? 'null')
 describe('auth.slice reducer', () => {
   beforeEach(() => localStorage.clear())
 
-  it('loginSuccess stores the session and persists it', () => {
+  it('loginSuccess keeps the full session in memory but persists only the user', () => {
     const next = reducer(empty, loginSuccess(loginPayload))
     expect(next).toEqual(loginPayload)
-    expect(storedAuth()).toEqual(loginPayload)
+    // Token KHÔNG còn được ghi vào localStorage (Bậc 2) — chỉ user được persist.
+    expect(storedAuth()).toEqual({ user: loginPayload.user })
+    expect(storedAuth().token).toBeUndefined()
+    expect(storedAuth().refreshToken).toBeUndefined()
   })
 
   it('tokenRefreshed updates the tokens but keeps the user', () => {
     const loggedIn = reducer(empty, loginSuccess(loginPayload))
-    const next = reducer(
-      loggedIn,
-      tokenRefreshed({ token: 'access-2', refreshToken: 'refresh-2', expireAt: 2000 })
-    )
+    const next = reducer(loggedIn, tokenRefreshed({ token: 'access-2', expireAt: 2000 }))
     expect(next.user).toEqual(loginPayload.user)
     expect(next.token).toBe('access-2')
-    expect(next.refreshToken).toBe('refresh-2')
     expect(next.expireAt).toBe(2000)
-    expect(storedAuth().token).toBe('access-2')
+    // Token mới chỉ nằm trong memory, không lọt ra localStorage.
+    expect(storedAuth()).toEqual({ user: loginPayload.user })
+    expect(storedAuth().token).toBeUndefined()
   })
 
   it('logout clears the session and storage', () => {

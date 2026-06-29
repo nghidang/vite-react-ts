@@ -60,13 +60,10 @@ test.describe('Login flow', () => {
 
     await submitLogin(page, 'john', 'wrong-password')
 
-    // LƯU Ý (bài học E2E): interceptor của axios bắt MỌI 401 để thử refresh token. Ở đây
-    // chưa đăng nhập nên không có refresh token -> refresh ném lỗi (không phải AxiosError),
-    // nên `getErrorMessage` rơi về fallback chứ KHÔNG hiện message "Invalid credentials" của server.
-    // Unit test (mock ở tầng module) sẽ không lộ ra hành vi tích hợp này — E2E thì có.
-    await expect(
-      page.getByText('Login failed: please check your username and password.')
-    ).toBeVisible()
+    // Endpoint auth gắn cờ `skipAuthRefresh` nên interceptor 401 KHÔNG cố refresh ở đây
+    // (401 lúc login = sai thông tin, không phải token hết hạn). Nhờ vậy AxiosError 401
+    // gốc đi thẳng tới `getErrorMessage` và message thật của server được hiển thị.
+    await expect(page.getByText('Invalid credentials')).toBeVisible()
     await expect(page).toHaveURL(/\/login$/)
   })
 

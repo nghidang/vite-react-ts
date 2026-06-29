@@ -17,8 +17,8 @@ export function useAuthSuccess() {
   const location = useLocation()
 
   return useCallback(
-    ({ user, token, refreshToken, expireAt }: LoginResponse) => {
-      dispatch(loginSuccess({ user, token, refreshToken, expireAt }))
+    ({ user, token, expireAt }: LoginResponse) => {
+      dispatch(loginSuccess({ user, token, expireAt }))
       const from = (location.state as FromLocationState)?.from
       navigate(from ?? ROUTES.USER, { replace: true })
     },

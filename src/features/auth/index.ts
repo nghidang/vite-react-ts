@@ -6,8 +6,7 @@
 export {
   default as authReducer,
   selectIsAuthenticated,
-  getStoredToken,
-  getStoredRefreshToken,
+  selectToken,
   logout,
   tokenRefreshed,
 } from './stores/auth.slice'

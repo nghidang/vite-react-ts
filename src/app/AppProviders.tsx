@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { LangProvider } from '../i18n/LangProvider'
+import { AuthBootstrap } from './AuthBootstrap'
 import { queryClient } from './query.client'
 import { store } from './store'
 
@@ -11,7 +12,9 @@ export function AppProviders({ children }: { children: ReactNode }) {
     <LangProvider>
       <ReduxProvider store={store}>
         <QueryClientProvider client={queryClient}>
-          <BrowserRouter>{children}</BrowserRouter>
+          <BrowserRouter>
+            <AuthBootstrap>{children}</AuthBootstrap>
+          </BrowserRouter>
         </QueryClientProvider>
       </ReduxProvider>
     </LangProvider>
