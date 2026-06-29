@@ -1,0 +1,87 @@
+/* ================================================================
+   Shadow Design Tokens
+   Source: Figma — Design System Community
+   https://www.figma.com/design/UR3gk0YIw2va8EsqHfigid/
+
+   Each shadow is a two-layer drop-shadow:
+     layer 1 — tight sharp shadow (depth cue)
+     layer 2 — diffuse ambient shadow (elevation spread)
+
+   Shadow color base: #131927 (Grey/900)
+   box-shadow format: offset-x offset-y blur spread color
+   ================================================================ */
+
+:root {
+
+  /* ── Shadow color base ───────────────────────────────────────── */
+  --shadow-color-08: rgba(19, 25, 39, 0.08);
+  --shadow-color-10: rgba(19, 25, 39, 0.10);
+  --shadow-color-12: rgba(19, 25, 39, 0.12);
+  --shadow-color-14: rgba(19, 25, 39, 0.14);
+
+  /* ── Shadow 100 — Resting / subtle ──────────────────────────── */
+  --shadow-100:
+    0px 2px  4px -2px var(--shadow-color-12),
+    0px 4px  4px -2px var(--shadow-color-08);
+
+  /* ── Shadow 200 ──────────────────────────────────────────────── */
+  --shadow-200:
+    0px 4px  6px -4px var(--shadow-color-12),
+    0px 8px  8px -4px var(--shadow-color-08);
+
+  /* ── Shadow 300 ──────────────────────────────────────────────── */
+  --shadow-300:
+    0px 6px  8px  -6px var(--shadow-color-12),
+    0px 8px  16px -6px var(--shadow-color-08);
+
+  /* ── Shadow 400 ──────────────────────────────────────────────── */
+  --shadow-400:
+    0px 6px  12px -6px var(--shadow-color-12),
+    0px 8px  24px -4px var(--shadow-color-08);
+
+  /* ── Shadow 500 ──────────────────────────────────────────────── */
+  --shadow-500:
+    0px 6px  14px -6px var(--shadow-color-12),
+    0px 10px 32px -4px var(--shadow-color-10);
+
+  /* ── Shadow 600 ──────────────────────────────────────────────── */
+  --shadow-600:
+    0px 8px  18px -6px var(--shadow-color-12),
+    0px 12px 42px -4px var(--shadow-color-12);
+
+  /* ── Shadow 700 ──────────────────────────────────────────────── */
+  --shadow-700:
+    0px 8px  22px -6px var(--shadow-color-12),
+    0px 14px 64px -4px var(--shadow-color-12);
+
+  /* ── Shadow 800 — Floating / high elevation ──────────────────── */
+  --shadow-800:
+    0px 8px  28px -6px var(--shadow-color-12),
+    0px 18px 88px -4px var(--shadow-color-14);
+
+
+  /* ================================================================
+     SEMANTIC TOKENS
+     Map elevation levels to UI component roles.
+     ================================================================ */
+
+  --shadow-card:        var(--shadow-100);   /* default card, tile */
+  --shadow-card-hover:  var(--shadow-300);   /* card on hover */
+  --shadow-dropdown:    var(--shadow-300);   /* dropdown menu */
+  --shadow-popover:     var(--shadow-400);   /* tooltip, popover */
+  --shadow-modal:       var(--shadow-600);   /* dialog, modal */
+  --shadow-drawer:      var(--shadow-700);   /* side drawer */
+  --shadow-overlay:     var(--shadow-800);   /* floating panel */
+}
+
+
+/* ================================================================
+   Usage examples
+   ================================================================
+
+   .card          { box-shadow: var(--shadow-card); }
+   .card:hover    { box-shadow: var(--shadow-card-hover); }
+   .dropdown-menu { box-shadow: var(--shadow-dropdown); }
+   .modal         { box-shadow: var(--shadow-modal); }
+
+================================================================ */

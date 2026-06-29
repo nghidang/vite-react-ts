@@ -1,0 +1,129 @@
+/* ============================================================
+   typography.module.css
+   Source of truth: Figma — Design System Community
+   Font: Inter (set globally on :root)
+
+   Changes vs original:
+     h3  line-height 40 → 38   (Figma)
+     h4  font-size   24 → 28   (Figma)
+     h4  line-height 32 → 34   (Figma)
+     h5  font-size   20 → 24   (Figma)
+     [+] .subtitle             (was in types but missing in CSS)
+     [+] .highlight--no-bold   (for Highlight bold={false})
+     [+] .link:focus-visible   (keyboard accessibility)
+     [+] .link--no-underline   (for Link underline={false})
+   ============================================================ */
+
+.base {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0;
+}
+
+/* ── Headlines ─────────────────────────────────────────────── */
+.h1 {
+  font-size: 48px;
+  line-height: 58px;
+  font-weight: 600;
+}
+
+.h2 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 600;
+}
+
+.h3 {
+  font-size: 32px;
+  line-height: 38px;
+  /* was 40px */
+  font-weight: 600;
+}
+
+.h4 {
+  font-size: 28px;
+  /* was 24px */
+  line-height: 34px;
+  /* was 32px */
+  font-weight: 600;
+}
+
+.h5 {
+  font-size: 24px;
+  /* was 20px */
+  line-height: 28px;
+  font-weight: 600;
+}
+
+/* ── Subtitle ──────────────────────────────────────────────── */
+.subtitle {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+/* ── Body ──────────────────────────────────────────────────── */
+.body {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.body-sm {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+/* ── Caption ───────────────────────────────────────────────── */
+.caption {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+/* ── Semantic modifiers ────────────────────────────────────── */
+.label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.button {
+  font-weight: 600;
+}
+
+/* ── Inline: Highlight ─────────────────────────────────────── */
+.highlight {
+  font-weight: 600;
+  color: var(--color-primary-500);
+}
+
+/* bold={false} — keep color from .highlight, reset weight */
+.highlight--no-bold {
+  font-weight: inherit;
+}
+
+/* ── Inline: Link ──────────────────────────────────────────── */
+.link {
+  color: var(--color-primary-500);
+  cursor: pointer;
+  text-decoration: underline;
+  border-radius: 2px;
+  /* Inherit all font metrics from parent <Typography> */
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 600;
+}
+
+/* Keyboard focus — visible only for keyboard nav, not mouse click */
+.link:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* underline={false} */
+.link--no-underline {
+  text-decoration: none;
+}
