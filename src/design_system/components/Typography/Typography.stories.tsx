@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { fn } from '@storybook/test'
 import { Typography } from './Typography'
 import type { TypographyVariant } from './typography.types'
@@ -320,7 +320,7 @@ export const LinkOnClick: Story = {
   render: () => (
     <Typography variant="body">
       Call{' '}
-      <Typography.Link onClick={fn('Typography.Link onClick')}>098xxxxxx</Typography.Link>
+      <Typography.Link onClick={fn()}>098xxxxxx</Typography.Link>
       {' '}to contact us
     </Typography>
   ),
@@ -373,9 +373,9 @@ export const LinkNoUnderline: Story = {
   render: () => (
     <Typography variant="body">
       Already have an account?{' '}
-      <Typography.Link onClick={fn('sign-in')} underline={false}>Sign in</Typography.Link>
+      <Typography.Link onClick={fn()} underline={false}>Sign in</Typography.Link>
       {'  ·  '}New here?{' '}
-      <Typography.Link onClick={fn('sign-up')} underline={false}>Sign up</Typography.Link>
+      <Typography.Link onClick={fn()} underline={false}>Sign up</Typography.Link>
     </Typography>
   ),
 }
@@ -393,7 +393,7 @@ export const LinkKeyboardA11y: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <Typography variant="body">
         Tab đến đây →{' '}
-        <Typography.Link onClick={fn('keyboard-action')}>098xxxxxx</Typography.Link>
+        <Typography.Link onClick={fn()}>098xxxxxx</Typography.Link>
         {' '}rồi nhấn Enter hoặc Space
       </Typography>
       <Typography variant="caption" style={{ color: css.grey400 }}>
@@ -435,7 +435,7 @@ export const ComposedPhoneCall: Story = {
   render: () => (
     <Typography variant="body">
       Call{' '}
-      <Typography.Link onClick={fn('call-phone')}>098xxxxxx</Typography.Link>
+      <Typography.Link onClick={fn()}>098xxxxxx</Typography.Link>
       {' '}to contact us
     </Typography>
   ),
@@ -453,11 +453,11 @@ export const ComposedMixed: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Typography variant="body">
         Enter your <Typography.Highlight>email</Typography.Highlight> or call{' '}
-        <Typography.Link onClick={fn('call')}>098xxxxxx</Typography.Link> for help
+        <Typography.Link onClick={fn()}>098xxxxxx</Typography.Link> for help
       </Typography>
       <Typography variant="body-sm">
         This <Typography.Highlight color={css.red}>required</Typography.Highlight> field is empty —{' '}
-        <Typography.Link onClick={fn('learn-more')} underline={false}>learn more</Typography.Link>
+        <Typography.Link onClick={fn()} underline={false}>learn more</Typography.Link>
       </Typography>
       <Typography variant="body-sm">
         By signing up, you agree to our{' '}
