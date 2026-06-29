@@ -2,6 +2,13 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
+import { playwright } from '@vitest/browser-playwright'
+const dirname =
+  typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
+
 /**
  * Inject Content-Security-Policy qua thẻ <meta> — CHỈ khi build (`apply: 'build'`),
  * KHÔNG áp vào dev server: ở dev, Vite/react-refresh inject inline script cho HMR nên
@@ -40,6 +47,7 @@ function cspPlugin(apiOrigin: string): Plugin {
   }
 }
 
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -47,24 +55,59 @@ export default defineConfig(({ mode }) => {
   try {
     apiOrigin = new URL(env.VITE_API_BASE_URL).origin
   } catch {
-    // URL thiếu/sai sẽ được env.config.ts báo lỗi rõ ràng lúc runtime; ở đây bỏ qua.
+    if (env.VITE_API_BASE_URL) {
+      console.warn('[cspPlugin] VITE_API_BASE_URL không hợp lệ:', env.VITE_API_BASE_URL)
+    }
+    // Nếu không set → bỏ qua, env.config.ts sẽ báo lỗi rõ ràng lúc runtime.
   }
 
   return {
     plugins: [react(), cspPlugin(apiOrigin)],
     test: {
-      globals: true,
-      environment: 'jsdom',
-      setupFiles: './src/test/setup.ts',
-      css: false,
-      // Chỉ Vitest quản unit test trong `src/`. E2E (`e2e/*.spec.ts`) do Playwright chạy riêng,
-      // không để Vitest "nuốt" nhầm (mặc định include cả `**/*.spec.ts`).
-      include: ['src/**/*.{test,spec}.{ts,tsx}'],
       coverage: {
         provider: 'v8',
         include: ['src/**/*.{ts,tsx}'],
         exclude: ['src/**/*.{types,schemas,constants,routes}.{ts,tsx}', 'src/main.tsx'],
       },
+      projects: [
+        // ── Unit tests (jsdom) ──────────────────────────────────
+        {
+          extends: true,
+          test: {
+            globals: true,
+            environment: 'jsdom',
+            setupFiles: './src/test/setup.ts',
+            css: false,
+            // Chỉ Vitest quản unit test trong `src/`. E2E (`e2e/*.spec.ts`) do Playwright chạy riêng,
+            // không để Vitest "nuốt" nhầm (mặc định include cả `**/*.spec.ts`).
+            include: ['src/**/*.{test,spec}.{ts,tsx}'],
+          },
+        },
+        // ── Storybook tests (Chromium) ──────────────────────────
+        {
+          extends: true,
+          plugins: [
+            // The plugin will run tests for the stories defined in your Storybook config
+            // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+            storybookTest({
+              configDir: path.join(dirname, '.storybook'),
+            }),
+          ],
+          test: {
+            name: 'storybook',
+            browser: {
+              enabled: true,
+              headless: true,
+              provider: playwright({}),
+              instances: [
+                { 
+                  browser: 'chromium',
+                },
+              ],
+            },
+          },
+        },
+      ],
     },
   }
 })
